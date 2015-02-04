@@ -15,4 +15,4 @@ for (n in 1:num_points) {
     x[n]=r*cos(theta)
     y[n]=r*sin(theta)
 }
-plot(x,y,axes=FALSE,ann=FALSE,pch=19,cex=1,)
+plot(x,y,axes=FALSE,ann=FALSE,pch=19,cex=1.18,)
