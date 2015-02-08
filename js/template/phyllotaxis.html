@@ -1,0 +1,17 @@
+<svg
+  id="phyllotaxis"
+  v-attr="width: width, height: height">
+
+  <g v-attr="transform: 'translate(' + width/2 + ',' + height/2 + ')'">
+    <circle
+      v-repeat="florets"
+      v-component="phyllotaxis-floret"
+      v-with="
+        size: floretSize,
+        theta: theta,
+        scale: scale,
+        fill: floretColor">
+    </circle>
+  </g>
+
+</svg>

@@ -1,12 +1,12 @@
 'use strict';
 // generated on 2014-10-10 using generator-gulp-webapp 0.1.0
 
-var connect     = require('connect');
-var source      = require('vinyl-source-stream');
 var browserify  = require('browserify');
-var gulp        = require('gulp');
+var connect     = require('connect');
 var del         = require('del');
+var gulp        = require('gulp');
 var serveStatic = require('serve-static');
+var source      = require('vinyl-source-stream');
 
 // load plugins
 var $ = require('gulp-load-plugins')();
@@ -31,10 +31,10 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('browserify', ['scripts'], function () {
-  return build('./js/Phyllotaxis.js', '.', {
+  return build('./js/Phyllotaxis.js', './', {
     debug     : true,
     standalone: 'Phyllotaxis',
-    paths     : ['./ui/js']
+    paths     : ['./js']
   });
 });
 
@@ -43,7 +43,8 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('js/**/*.js', ['browserify']);
+  gulp.start('browserify');
+  gulp.watch('js/**/*.{js,html}', ['browserify']);
 });
 
 gulp.task('serve', function () {
@@ -54,4 +55,6 @@ gulp.task('serve', function () {
     $.util.log('Server listening on http://localhost:' + 8000);
 });
 
-gulp.task('default', ['browserify']);
+gulp.task('default', function () {
+  return gulp.start('browserify');
+});
