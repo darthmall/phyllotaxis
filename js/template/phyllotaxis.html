@@ -1,17 +1,46 @@
-<svg
-  id="phyllotaxis"
-  v-attr="width: width, height: height">
+<div>
+  <svg
+    id="phyllotaxis"
+    v-attr="width: width, height: height">
 
-  <g v-attr="transform: 'translate(' + width/2 + ',' + height/2 + ')'">
-    <circle
-      v-repeat="florets"
-      v-component="phyllotaxis-floret"
-      v-with="
-        size: floretSize,
-        theta: theta,
-        scale: scale,
-        fill: floretColor">
-    </circle>
-  </g>
+    <g v-attr="transform: 'translate(' + width/2 + ',' + height/2 + ')'">
+      <circle
+        v-repeat="florets"
+        v-component="phyllotaxis-floret"
+        v-with="
+          size : floretSize,
+          theta: theta,
+          scale: scale,
+          fill : floretColor">
+      </circle>
+    </g>
 
-</svg>
+  </svg>
+
+  <form id="settings">
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: floretCount">
+      Florets
+    </div>
+
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: floretSize">
+      Floret Size
+    </div>
+
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: scale">
+      Scale
+    </div>
+
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: theta"
+      data-step="0.0001">
+      Angle
+    </div>
+  </form>
+</div>
