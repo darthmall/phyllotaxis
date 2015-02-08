@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     transform: ['reactify'],
-                    browserifyOptions: {debug: true}
+                    //browserifyOptions: {debug: true}
                 },
                 files: {'build/scripts/main.js': ['src/scripts/main.jsx']}
             }
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
         'clean:dev',      // clean old files out of build/dev
         'copy:dev',       // copy static asset files from app/ to build/dev
         'browserify:dev', // bundle JS with browserify
-        //'less:dev',       // compile LESS to CSS
+        'less:dev',       // compile LESS to CSS
     ]);
     grunt.registerTask('serveDev', [
         'buildDev',
