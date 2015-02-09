@@ -9,7 +9,8 @@ var Input = {
 
   data: function () {
     return {
-      step: 1
+      hasFocus: false,
+      step    : 1
     };
   },
 

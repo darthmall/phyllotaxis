@@ -18,29 +18,53 @@
   </svg>
 
   <form id="settings">
-    <div
-      v-component="phyllotaxis-input"
-      v-with="value: floretCount">
-      Florets
-    </div>
+    <fieldset>
+      <legend>Phyllotaxis</legend>
+      <div
+         v-component="phyllotaxis-input"
+         v-with="value: scale">
+         Scale
+       </div>
 
-    <div
-      v-component="phyllotaxis-input"
-      v-with="value: floretSize">
-      Floret Size
-    </div>
+       <div
+         v-component="phyllotaxis-input"
+         v-with="value: theta"
+         data-step="0.0001">
+         Angle
+       </div>
+    </fieldset>
 
-    <div
-      v-component="phyllotaxis-input"
-      v-with="value: scale">
-      Scale
-    </div>
+    <fieldset>
+      <legend>Florets</legend>
+      <div
+        v-component="phyllotaxis-input"
+        v-with="value: floretCount">
+        Count
+      </div>
 
-    <div
-      v-component="phyllotaxis-input"
-      v-with="value: theta"
-      data-step="0.0001">
-      Angle
-    </div>
+      <div
+        v-component="phyllotaxis-input"
+        v-with="value: floretSize">
+        Size
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Animation</legend>
+      <div
+        v-component="phyllotaxis-input"
+        v-with="value: fps"
+        data-step="0.0001">
+        Speed
+      </div>
+
+      <div
+        v-component="phyllotaxis-input"
+        v-with="value: step"
+        data-step="0.0001">
+        Step
+      </div>
+    </fieldset>
+
   </form>
 </div>

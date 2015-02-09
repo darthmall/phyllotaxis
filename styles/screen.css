@@ -49,6 +49,10 @@
     font-style: italic;
 }
 
+::selection {
+  background-color: #70CEE6;
+}
+
 body {
   background-color: #fff;
   color           : #333;
@@ -85,10 +89,27 @@ body {
   opacity: 1;
 }
 
+fieldset {
+  border    : none;
+  border-top: 1px solid #fff;
+  padding   : 0;
+  margin    : 0 0 10.5pt 0;
+}
+
+legend {
+  color: #fff;
+  text-align: center;
+}
+
 label {
+  color         : #fff;
   display       : block;
   font-size     : 12pt;
   text-transform: uppercase;
+}
+
+label * {
+  transition    : color 300ms ease-in-out;
 }
 
 input[type="text"] {
@@ -101,10 +122,16 @@ input[type="text"] {
   font-size       : 14pt;
 
   box-sizing      : border-box;
-  margin-bottom   : 7pt;
+  margin          : -4px 0 7pt 0;
   padding         : 4pt;
   width           : 100%;
-  }
+
+  transition      : border-color 300ms ease-in-out;
+}
+
+label .focused {
+  color: #FEC50D;
+}
 
 input[type="text"]:focus {
   outline     : none;

@@ -1,9 +1,14 @@
 <label>
-  <content></content>
+  <span v-class="focused: hasFocus">
+    <content></content>
+  </span>
+
   <input
     type="text"
     v-model="value"
     v-on="
       keyup: decrement | key down,
-      keyup: increment | key up">
+      keyup: increment | key up,
+      focus: hasFocus = true,
+      blur: hasFocus = false">
 </label>
