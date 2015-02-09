@@ -1,0 +1,19 @@
+.number-input,
+.function-input {
+  display: block;
+}
+.number-input .function-signature,
+.function-input .function-signature {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 10px;
+}
+.number-input input,
+.function-input input {
+  display: inline-block;
+  margin-left: 20px;
+}
+.number-input.invalid-value input,
+.function-input.invalid-value input {
+  background-color: #ffbbbb;
+}

@@ -1,4 +1,2 @@
-Phyllotaxis.js
-node_modules
-*.sublime-*
-.DS_Store
+.idea/
+react/node_modules/
