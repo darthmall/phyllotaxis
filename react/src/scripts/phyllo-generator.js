@@ -10,7 +10,7 @@ function isUndefined(value) {
 function defaultOptions(options, defaults) {
     var newOptions = {};
     for(var key in defaults) {
-        newOptions.key = isUndefined(options.key) ? defaults.key : options.key;
+        newOptions[key] = isUndefined(options[key]) ? defaults[key] : options[key];
     }
     return newOptions;
 }
@@ -18,19 +18,21 @@ function defaultOptions(options, defaults) {
 function polarToCartesian(r, theta) { return [r * Math.cos(theta), r * Math.sin(theta)]; }
 
 function generatePhyllotaxis(options) {
-    options = options || {};
-    defaultOptions(options, { // default phyllo options
+    options = defaultOptions(options || {}, { // default phyllo options
         angle: 2.4,
         numPoints: 200,
-        radiusFunc: function(n, angle) { return Math.sqrt(n); },
-        thetaFunc: function(n, angle) { return angle * n; }
+        thetaFunc: function(n, angle, numPoints) { return angle * n; },
+        radiusFunc: function(n, angle, theta, numPoints) { return Math.sqrt(n); },
+        colorFunc: function(n, angle, theta, radius, numPoints) { return '#000'; }
     });
     var maxRadius = 0, points = [];
 
     for (n = 1; n <= options.numPoints; n++) {
         var theta = options.thetaFunc(n, options.angle, options.numPoints),
-            r = options.radiusFunc(n, options.angle, theta, options.numPoints);
-        points.push(polarToCartesian(r, theta));
+            r = options.radiusFunc(n, options.angle, theta, options.numPoints),
+            color = options.colorFunc(n, options.angle, theta, r, options.numPoints),
+            coords = polarToCartesian(r, theta);
+        points.push([coords[0], coords[1], color]);
         maxRadius = Math.max(maxRadius, r);
     }
 

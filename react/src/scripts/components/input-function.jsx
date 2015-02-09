@@ -2,7 +2,7 @@
 var _ = require('lodash'),
     React = require('react');
 
-var funcBeginRegEx =  /^function\s*\([a-z,\s]*\)\s*\{\s*/, // 'function(a,b,c) { '
+var funcBeginRegEx =  /^function\s*\([\w,\s]*\)\s*\{\s*/, // 'function(a,b,c) { '
     funcEndRegEx = /\s*}\s*$/; // ' } '
 
 function unwrapFuncStr(funcStr) {
@@ -30,8 +30,8 @@ var FunctionInput = React.createClass({
         var isValid = false;
         if(!_.isFunction(newFunc)) return false;
         try {
-            var returnVal = newFunc(0,0); // todo figure out better test
-            isValid =  _.isNumber(returnVal);
+            var returnVal = newFunc(1,1,1,1); // todo figure out better test
+            isValid =  !_.isUndefined(returnVal) && !_.isNaN(returnVal);
         } catch(e) {}
         return isValid;
     },
