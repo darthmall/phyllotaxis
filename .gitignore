@@ -1,3 +1,4 @@
 Phyllotaxis.js
 node_modules
 *.sublime-*
+.DS_Store
