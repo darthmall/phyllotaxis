@@ -9,6 +9,7 @@
   "author": "W. Evan Sheehan",
   "license": "MIT",
   "dependencies": {
+    "d3": "^3.5.4",
     "vue": "^0.11.5"
   },
   "devDependencies": {

@@ -2,6 +2,11 @@
 'use strict';
 
 var Vue = require('vue');
+var d3  = require('d3');
+
+function degrees(rad) {
+  return rad * 180 / Math.PI;
+}
 
 var Phyllotaxis = {
   el      : '#phyllotaxis',
@@ -17,7 +22,8 @@ var Phyllotaxis = {
     height: 0,
     step: 0.0001,
     fps: 60,
-    playing: false
+    playing: false,
+    colored: false
   },
 
   attached: function () {
@@ -64,10 +70,22 @@ var Phyllotaxis = {
 
     animate: function () {
       if (this.playing) {
-        this.theta += this.step;
+        this.theta      += this.step;
+        this.floretColor = this.colored ?
+          d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
+          '#333333';
 
         window.requestAnimationFrame(this.animate);
       }
+    }
+  },
+
+  watch: {
+    'colored': function () {
+      console.log(degrees(this.theta));
+      this.floretColor = this.colored ?
+        d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
+        '#333333';
     }
   },
 
