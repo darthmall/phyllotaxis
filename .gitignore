@@ -1,5 +1,4 @@
 .idea/
-react/node_modules/
-*.sublime-*
 node_modules
+*.sublime-*
 .DS_Store
