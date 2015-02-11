@@ -38,17 +38,28 @@ gulp.task('browserify', ['scripts'], function () {
   });
 });
 
-gulp.task('build', ['browserify'], function () {
-  return gulp.src(['index.html', '**/*.css', '!node_modules/**'])
-    .pipe(gulp.dest('./build'))
-})
+gulp.task('fonts', function () {
+  return gulp.src('fonts/**/*')
+    .pipe(gulp.dest('./build/fonts'));
+});
+
+gulp.task('styles', function () {
+  return gulp.src('styles/**/*.css')
+    .pipe(gulp.dest('./build/styles'));
+});
+
+gulp.task('html', function () {
+  return gulp.src(['**/*.html', '!node_modules/**/*'])
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('build', ['browserify', 'styles', 'fonts', 'html']);
 
 gulp.task('clean', function (cb) {
   del('build', cb);
 });
 
-gulp.task('watch', function () {
-  gulp.start('browserify');
+gulp.task('watch', ['build'], function () {
   gulp.watch('js/**/*.{js,html}', ['browserify']);
 });
 
@@ -60,4 +71,6 @@ gulp.task('serve', function () {
     $.util.log('Server listening on http://localhost:' + 8000);
 });
 
-gulp.task('default', ['clean', 'build']);
+gulp.task('default', ['clean'], function () {
+  return gulp.start('build');
+});
