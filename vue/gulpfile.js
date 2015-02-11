@@ -31,15 +31,20 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('browserify', ['scripts'], function () {
-  return build('./js/Phyllotaxis.js', './', {
+  return build('./js/Phyllotaxis.js', './build/js', {
     debug     : true,
     standalone: 'Phyllotaxis',
     paths     : ['./js']
   });
 });
 
+gulp.task('build', ['browserify'], function () {
+  return gulp.src(['index.html', '**/*.css', '!node_modules/**'])
+    .pipe(gulp.dest('./build'))
+})
+
 gulp.task('clean', function (cb) {
-  del('Phyllotaxis.js', cb);
+  del('build', cb);
 });
 
 gulp.task('watch', function () {
@@ -49,12 +54,10 @@ gulp.task('watch', function () {
 
 gulp.task('serve', function () {
   connect()
-    .use(serveStatic('.'))
+    .use(serveStatic('build'))
     .listen(8000);
 
     $.util.log('Server listening on http://localhost:' + 8000);
 });
 
-gulp.task('default', function () {
-  return gulp.start('browserify');
-});
+gulp.task('default', ['clean', 'build']);
