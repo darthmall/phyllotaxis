@@ -13,17 +13,24 @@ var Phyllotaxis = {
   template: require('template/phyllotaxis.html'),
 
   data: {
-    floretSize: 5,
-    theta: 2.39982772,
-    scale: 15,
+    // Computation inputs
+    scale      : 15,
+    theta      : 2.39982772,
     floretCount: 200,
+
+    // Canvas
+    width      : 0,
+    height     : 0,
+
+    // Rendering
+    colored    : false,
     floretColor: '#333333',
-    width: 0,
-    height: 0,
-    step: 0.0001,
-    fps: 60,
-    playing: false,
-    colored: false
+    floretSize : 5,
+
+    // Animation
+    fps        : 60,
+    playing    : false,
+    step       : 0.0001
   },
 
   attached: function () {
