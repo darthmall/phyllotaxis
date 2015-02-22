@@ -7,6 +7,7 @@ var browserify  = require('browserify');
 var connect     = require('connect');
 var del         = require('del');
 var exec        = require('child_process').exec;
+var glob        = require('glob');
 var gulp        = require('gulp');
 var pkg         = require('./package.json');
 var serveStatic = require('serve-static');
@@ -22,7 +23,7 @@ var path = {
   'main'       : 'main.js',
   'scripts'    : 'js/**/*.js',
   'styles'     : ['styles/**/*.less', '!styles/**/_*.less'],
-  'tests'      : 'tests/'
+  'tests'      : './tests/**/*.js'
 };
 
 
@@ -47,10 +48,7 @@ var libBundle = browserify({
 
 // Bundler for incremental builds using watchify
 var mainBundle = browserify(path.main, {
-    cache        : {},
     debug        : true,
-    fullPaths    : true,
-    packageCache : {},
     paths        : ['./js'],
     standalone   : 'Phyllotaxis'
   })
@@ -147,6 +145,25 @@ gulp.task('serve', function () {
     .on('change', function (path) {
       $.livereload.changed(path);
     });
+});
+
+gulp.task('test', function () {
+  var bundler = browserify(glob.sync(path.tests), {
+    debug : true,
+    paths : ['./js'],
+  })
+  .external(path.libs)
+  .transform('vueify')
+  .transform('partialify');
+
+  var bundle = bundler
+    .bundle()
+    .on('error', err);
+
+  return bundle
+    .pipe(source('js/tests.js'))
+    .pipe(gulp.dest(path.build))
+    .pipe($.mocha({ reporter: 'spec' }));
 });
 
 gulp.task('default', ['clean'], function () {

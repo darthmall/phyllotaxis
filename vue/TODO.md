@@ -6,7 +6,8 @@
 - [ ] Canvas implementation
 - [ ] Input validation
 - [ ] Phyllotaxis clock
-- [ ] Tests
+- [x] Tests
+- [ ] Code coverage
 - [ ] Comments!
 - [ ] Input formatting
 - [ ] Reset button
