@@ -97,8 +97,8 @@ var Phyllotaxis = {
   },
 
   components: {
-    'phyllotaxis-floret': require('component/floret'),
-    'phyllotaxis-input' : require('component/input')
+    'phyllotaxis-floret': require('component/floret.vue'),
+    'phyllotaxis-input' : require('component/input.vue')
   }
 };
 
