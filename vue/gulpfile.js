@@ -4,6 +4,7 @@
 var browserify  = require('browserify');
 var connect     = require('connect');
 var del         = require('del');
+var exec        = require('child_process').exec;
 var gulp        = require('gulp');
 var serveStatic = require('serve-static');
 var source      = require('vinyl-source-stream');
@@ -31,6 +32,7 @@ function build(opts) {
     .bundle()
     .on('error', function (e) {
       $.util.log(e.message);
+      exec('say -v Fred "Build failed"');
       this.emit('end');
     });
 
