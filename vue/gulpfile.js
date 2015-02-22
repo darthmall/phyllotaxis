@@ -57,6 +57,7 @@ gulp.task('fonts', function () {
 
 gulp.task('styles', function () {
   return gulp.src(path.styles)
+    .pipe($.less())
     .pipe(gulp.dest(path.build));
 });
 
