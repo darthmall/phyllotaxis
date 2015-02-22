@@ -1,0 +1,6 @@
+- [ ] Canvas implementation
+- [ ] Custom radius functions (sin, cos, tan, _etc._)
+- [ ] Input validation
+- [ ] Mirrored overlay
+- [ ] Phyllotaxis clock
+- [ ] Tests
