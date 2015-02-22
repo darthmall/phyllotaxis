@@ -19,9 +19,11 @@
 'use strict';
 
 var SVGCanvas = {
-  data: {
-    height : 1,
-    width  : 1,
+  data: function () {
+    return {
+      height : 1,
+      width  : 1,
+    };
   },
 
   ready: function () {
@@ -54,10 +56,11 @@ var SVGCanvas = {
     },
 
     onResize: function () {
-      var parent = this.$el.parentElement;
+      this.height = this.$el.clientHeight;
+      this.width  = this.$el.clientWidth;
 
-      this.width  = parent.clientWidth;
-      this.height = parent.clientHeight;
+      console.debug(this.height);
+      console.debug(this.width);
     }
   },
 
