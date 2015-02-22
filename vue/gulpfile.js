@@ -24,17 +24,19 @@ var path = {
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+function err(e) {
+  $.util.log(e.message);
+  exec('say -v Fred "Build failed"');
+  this.emit('end');
+}
+
 // Bundle the JavaScript with Browserify
 function build(opts) {
   var bundleStream = browserify(path.main, opts)
     .transform('vueify')
     .transform('partialify')
     .bundle()
-    .on('error', function (e) {
-      $.util.log(e.message);
-      exec('say -v Fred "Build failed"');
-      this.emit('end');
-    });
+    .on('error', err);
 
   return bundleStream
     .pipe(source(path.main))
@@ -69,6 +71,7 @@ gulp.task('fonts', function () {
 gulp.task('styles', function () {
   return gulp.src(path.styles)
     .pipe($.less())
+    .on('error', err)
     .pipe(gulp.dest(path.build));
 });
 
