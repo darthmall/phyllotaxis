@@ -1,3 +1,5 @@
+- [x] Incremental builds with watchify
+- [ ] Bundle dependencies separately for faster builds and loads
 - [ ] Add a README
 - [ ] Mirrored overlay
 - [ ] Custom radius functions (sin, cos, tan, _etc._)
@@ -6,3 +8,6 @@
 - [ ] Phyllotaxis clock
 - [ ] Tests
 - [ ] Comments!
+- [ ] Input formatting
+- [ ] Reset button
+- [ ] Add scripts to package.json

@@ -8,6 +8,7 @@ var exec        = require('child_process').exec;
 var gulp        = require('gulp');
 var serveStatic = require('serve-static');
 var source      = require('vinyl-source-stream');
+var watchify    = require('watchify');
 
 var path = {
   'build'      : 'build/',
@@ -30,15 +31,25 @@ function err(e) {
   this.emit('end');
 }
 
+// Bundler for incremental builds using watchify
+var mainBundle = watchify(browserify(path.main, {
+    cache        : {},
+    debug        : true,
+    fullPaths    : true,
+    packageCache : {},
+    paths        : ['./js'],
+    standalone   : 'Phyllotaxis'
+  }))
+  .transform('vueify')
+  .transform('partialify');
+
 // Bundle the JavaScript with Browserify
 function build(opts) {
-  var bundleStream = browserify(path.main, opts)
-    .transform('vueify')
-    .transform('partialify')
+  var bundle = mainBundle
     .bundle()
     .on('error', err);
 
-  return bundleStream
+  return bundle
     .pipe(source(path.main))
     .pipe($.rename('Phyllotaxis.js'))
     .pipe(gulp.dest(path.build));
@@ -52,13 +63,7 @@ gulp.task('jshint', function () {
 });
 
 // Run the builder
-gulp.task('browserify', ['jshint'], function () {
-  return build({
-    debug     : true,
-    standalone: 'Phyllotaxis',
-    paths     : ['./js']
-  });
-});
+gulp.task('browserify', ['jshint'], build);
 
 // Move the fonts to the build directory
 gulp.task('fonts', function () {
@@ -96,7 +101,8 @@ gulp.task('clean', function (cb) {
 
 // Monitor code for changes and rebuild
 gulp.task('watch', ['build'], function () {
-  gulp.watch(path.components, ['browserify']);
+  mainBundle.on('update', build);
+
   gulp.watch(path.fonts, ['fonts']);
   gulp.watch(path.styles, ['styles']);
   gulp.watch(path.html, ['html']);
