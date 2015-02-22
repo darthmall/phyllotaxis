@@ -1,3 +1,5 @@
+/* global require */
+
 'use strict';
 // generated on 2014-10-10 using generator-gulp-webapp 0.1.0
 
@@ -6,9 +8,9 @@ var connect     = require('connect');
 var del         = require('del');
 var exec        = require('child_process').exec;
 var gulp        = require('gulp');
+var pkg         = require('./package.json');
 var serveStatic = require('serve-static');
 var source      = require('vinyl-source-stream');
-var watchify    = require('watchify');
 
 var path = {
   'build'      : 'build/',
@@ -16,11 +18,13 @@ var path = {
   'dist'       : 'dist/',
   'fonts'      : 'fonts/**/*.{ttf,otf,svg,eot,woff}',
   'html'       : 'index.html',
+  'libs'       : Object.keys(pkg.dependencies),
   'main'       : 'main.js',
   'scripts'    : 'js/**/*.js',
-  'styles'     : 'styles/**/*.less',
+  'styles'     : ['styles/**/*.less', '!styles/**/_*.less'],
   'tests'      : 'tests/'
 };
+
 
 // load plugins
 var $ = require('gulp-load-plugins')();
@@ -28,30 +32,40 @@ var $ = require('gulp-load-plugins')();
 function err(e) {
   $.util.log(e.message);
   exec('say -v Fred "Build failed"');
+
+  // jshint validthis: true
   this.emit('end');
 }
 
+var libBundle = browserify({
+    cache        : {},
+    debug        : true,
+    fullPaths    : true,
+    packageCache : {}
+  })
+  .require(path.libs);
+
 // Bundler for incremental builds using watchify
-var mainBundle = watchify(browserify(path.main, {
+var mainBundle = browserify(path.main, {
     cache        : {},
     debug        : true,
     fullPaths    : true,
     packageCache : {},
     paths        : ['./js'],
     standalone   : 'Phyllotaxis'
-  }))
+  })
+  .external(path.libs)
   .transform('vueify')
   .transform('partialify');
 
 // Bundle the JavaScript with Browserify
-function build(opts) {
+function build() {
   var bundle = mainBundle
     .bundle()
     .on('error', err);
 
   return bundle
-    .pipe(source(path.main))
-    .pipe($.rename('Phyllotaxis.js'))
+    .pipe(source('js/main.js'))
     .pipe(gulp.dest(path.build));
 };
 
@@ -62,8 +76,19 @@ gulp.task('jshint', function () {
     .pipe($.jshint.reporter(require('jshint-stylish')));
 });
 
+// Build library bundle
+gulp.task('libs', function () {
+  var bundle = libBundle
+    .bundle()
+    .on('error', err);
+
+  return bundle
+    .pipe(source('js/lib.js'))
+    .pipe(gulp.dest(path.build));
+});
+
 // Run the builder
-gulp.task('browserify', ['jshint'], build);
+gulp.task('browserify', ['libs', 'jshint'], build);
 
 // Move the fonts to the build directory
 gulp.task('fonts', function () {
@@ -77,7 +102,7 @@ gulp.task('styles', function () {
   return gulp.src(path.styles)
     .pipe($.less())
     .on('error', err)
-    .pipe(gulp.dest(path.build));
+    .pipe(gulp.dest(path.build + 'styles'));
 });
 
 // Move the HTML into the build directory
@@ -87,7 +112,7 @@ gulp.task('html', function () {
 });
 
 // Build everything
-gulp.task('build', ['browserify', 'styles', 'fonts', 'html']);
+gulp.task('build', ['libs', 'browserify', 'styles', 'fonts', 'html']);
 
 // Create a zip file suitable for deploying to a server with optimized
 // JavaScript and CSS
@@ -101,8 +126,8 @@ gulp.task('clean', function (cb) {
 
 // Monitor code for changes and rebuild
 gulp.task('watch', ['build'], function () {
-  mainBundle.on('update', build);
-
+  gulp.watch('./package.json', ['libs']);
+  gulp.watch(path.components, ['browserify']);
   gulp.watch(path.fonts, ['fonts']);
   gulp.watch(path.styles, ['styles']);
   gulp.watch(path.html, ['html']);

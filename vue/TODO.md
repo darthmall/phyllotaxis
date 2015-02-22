@@ -1,5 +1,5 @@
-- [x] Incremental builds with watchify
-- [ ] Bundle dependencies separately for faster builds and loads
+- [ ] Incremental builds with watchify
+- [x] Bundle dependencies separately for faster builds and loads
 - [ ] Add a README
 - [ ] Mirrored overlay
 - [ ] Custom radius functions (sin, cos, tan, _etc._)
