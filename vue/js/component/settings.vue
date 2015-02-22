@@ -1,0 +1,66 @@
+<template>
+  <fieldset>
+    <legend>Phyllotaxis</legend>
+    <div
+       v-component="phyllotaxis-input"
+       v-with="value: scale">
+       Scale
+     </div>
+
+     <div
+       v-component="phyllotaxis-input"
+       v-with="value: theta"
+       data-step="0.0001">
+       Angle
+     </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Florets</legend>
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: floretCount">
+      Count
+    </div>
+
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: floretSize">
+      Size
+    </div>
+
+    <label>
+      <input
+        type="checkbox"
+        v-model="colored">
+      Colored
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Animation</legend>
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: fps"
+      data-step="0.0001">
+      Speed
+    </div>
+
+    <div
+      v-component="phyllotaxis-input"
+      v-with="value: step"
+      data-step="0.0001">
+      Step
+    </div>
+  </fieldset>
+</template>
+
+<script>
+  'use strict';
+
+  var Settings = {
+    inherit: true
+  };
+
+  module.exports = Settings;
+</script>

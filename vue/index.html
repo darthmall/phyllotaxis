@@ -9,8 +9,22 @@
   <link rel="stylesheet" href="screen.css">
 </head>
 
-<body>
-  <div id="phyllotaxis"></div>
+<body id="phyllotaxis">
+  <div
+    id="canvas"
+    v-component="{{ renderer }}"
+    v-with="
+      floretColor : floretColor,
+      floretCount : floretCount,
+      floretSize  : floretSize,
+      scale       : scale,
+      theta       : theta"
+    ></div>
+
+  <form
+    id="settings"
+    v-component="phyllotaxis-settings"></form>
+
   <script src="Phyllotaxis.js"></script>
 </body>
 </html>

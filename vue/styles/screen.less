@@ -1,18 +1,32 @@
 @import 'settings';
 
 ::selection {
-  background-color: #70CEE6;
+  background-color: @primary-color;
+}
+
+html {
+  height: 100%;
 }
 
 body {
-  background-color: #fff;
-  color           : ;
+  background-color : #fff;
+  color            : @font-color;
 
-  font-family     : @font-stack;
-  font-size       : @font-size;
+  font-family      : @font-stack;
+  font-size        : @font-size;
 
-  margin          : 0;
-  padding         : 0;
+  height           : 100%;
+  margin           : 0;
+  padding          : 0;
+}
+
+#phyllotaxis {
+  display     : flex;
+  align-items : stretch;
+}
+
+#canvas {
+  flex-grow: 1;
 }
 
 .floret {
@@ -20,23 +34,10 @@ body {
 }
 
 #settings {
-  background-color: rgba(51, 51, 51, 0.5);
-
-  opacity: 0.1;
-
-  position: fixed;
-  top     : 0;
-  right   : 0;
-  bottom  : 0;
+  background-color: rgb(51, 51, 51);
 
   padding : 12pt;
   width   : 200px;
-
-  transition: opacity 300ms ease-in-out;
-}
-
-#settings:hover {
-  opacity: 1;
 }
 
 fieldset {

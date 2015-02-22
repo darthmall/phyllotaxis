@@ -9,70 +9,43 @@ function degrees(rad) {
 }
 
 var Phyllotaxis = {
-  el      : '#phyllotaxis',
-  template: require('template/phyllotaxis.html'),
+  el       : '#phyllotaxis',
 
   data: {
     // Computation inputs
-    scale      : 15,
-    theta      : 2.39982772,
-    floretCount: 200,
-
-    // Canvas
-    width      : 0,
-    height     : 0,
+    scale        : 15,
+    theta        : 2.39982772,
+    floretCount  : 200,
 
     // Rendering
-    colored    : false,
-    floretColor: '#333333',
-    floretSize : 5,
+    renderer     : 'phyllotaxis-svg-renderer',
+    colored      : false,
+    floretColor  : '#333333',
+    floretSize   : 5,
 
     // Animation
-    fps        : 60,
-    playing    : false,
-    step       : 0.0001
+    fps          : 60,
+    playing      : false,
+    step         : 0.0001
   },
 
   attached: function () {
-    window.addEventListener('resize', this);
     window.addEventListener('keyup', this);
-    this.onResize();
-  },
-
-  computed: {
-    florets: function () {
-      var f = new Array(this.floretCount);
-
-      for (var i = 0, l = this.floretCount; i < l; i++) {
-        f[i] = { n: i + 1 };
-      }
-
-      return f;
-    }
   },
 
   methods: {
     handleEvent: function (evt) {
       switch (evt.type) {
-      case 'resize':
-        this.onResize();
-        break;
+        case 'keyup':
+          if (evt.keyCode === 32) {
+            this.playing = !this.playing;
+            this.animate();
+          }
+          break;
 
-      case 'keyup':
-        if (evt.keyCode === 32) {
-          this.playing = !this.playing;
-          this.animate();
-        }
-        break;
-
-      default:
-        break;
+        default:
+          break;
       }
-    },
-
-    onResize: function () {
-      this.width  = window.innerWidth;
-      this.height = window.innerHeight;
     },
 
     animate: function () {
@@ -97,8 +70,9 @@ var Phyllotaxis = {
   },
 
   components: {
-    'phyllotaxis-floret': require('component/floret.vue'),
-    'phyllotaxis-input' : require('component/input.vue')
+    'phyllotaxis-input'        : require('component/input.vue'),
+    'phyllotaxis-settings'     : require('component/settings.vue'),
+    'phyllotaxis-svg-renderer' : require('component/svg-renderer.vue')
   }
 };
 
