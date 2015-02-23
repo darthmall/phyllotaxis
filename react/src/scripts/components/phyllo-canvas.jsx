@@ -73,7 +73,9 @@ var Phyllotaxis = React.createClass({
             pointSize = this.props.pointSize,
             twoPi = 2 * Math.PI;
 
-        ctx.clearRect(0, 0, this.props.width, this.props.height);
+        if(this.props.shouldClearOnFrame) {
+            ctx.clearRect(0, 0, this.props.width, this.props.height);
+        }
 
         for(var i=0; i<this.state.points.length; i++) {
             var coords = this.state.points[i];

@@ -14,6 +14,8 @@ var PhylloApp = React.createClass({
         return {
             height: window.innerHeight - 36,
             width: window.innerHeight - 36,
+            backgroundColor: '#212121',
+            shouldClearOnFrame: true,
 
             numPoints: 3000, // number of points in phyllo
             pointSize: 3, // radius of each point in phyllo
@@ -70,6 +72,7 @@ var PhylloApp = React.createClass({
                 <Phyllotaxis
                     width={this.state.width}
                     height={this.state.height}
+                    shouldClearOnFrame={this.state.shouldClearOnFrame}
                     numPoints={this.state.numPoints}
                     pointSize={this.state.pointSize}
                     angle={this.state.angle}
@@ -82,11 +85,12 @@ var PhylloApp = React.createClass({
                 <ControlPanel
                     isPlaying={this.state.isPlaying}
 
+                    shouldClearOnFrame={this.state.shouldClearOnFrame}
                     numPoints={this.state.numPoints}
                     pointSize={this.state.pointSize}
                     angle={this.state.angle}
                     angleStep={this.state.angleStep}
-
+                    backgroundColor={this.state.backgroundColor}
 
                     thetaFunc={this.state.thetaFunc}
                     thetaFuncParams={['n', 'angle', 'numPoints']} // parameters available in function

@@ -24,12 +24,31 @@ var ControlPanel = React.createClass({
         }, this);
     },
 
+    onBooleanStateChange(stateKey) {
+        return _.bind(function(event) {
+            var newState = {};
+            newState[stateKey] = event.target.checked;
+            this.props.onStateChange(newState);
+        }, this);
+    },
+
     render: function() {
         return (
             <div className='control-panel'>
                 <button className='play-button' onClick={this.props.onToggleAnimate}>
                     {this.props.isPlaying ? "Pause" : "Play"}
                 </button>
+
+                <div>
+                    <label className='boolean-input'>
+                        <input
+                            type="checkbox"
+                            checked={this.props.shouldClearOnFrame}
+                            onChange={this.onBooleanStateChange('shouldClearOnFrame')}
+                        />
+                        <span>Clear canvas</span>
+                    </label>
+                </div>
 
                 <NumberInput
                     label="# Points"
