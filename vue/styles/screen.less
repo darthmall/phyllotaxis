@@ -1,0 +1,95 @@
+@import '_settings';
+
+::selection {
+  background-color: @primary-color;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color : #fff;
+  color            : @font-color;
+
+  font-family      : @font-stack;
+  font-size        : @font-size;
+
+  height           : 100%;
+  margin           : 0;
+  padding          : 0;
+}
+
+#phyllotaxis {
+  display     : flex;
+  align-items : stretch;
+}
+
+#canvas {
+  flex-grow: 1;
+}
+
+.floret {
+  fill: #333;
+}
+
+#settings {
+  background-color: rgb(51, 51, 51);
+
+  padding : 12pt;
+  width   : 200px;
+}
+
+svg {
+  height : 100%;
+  width  : 100%;
+}
+
+fieldset {
+  border    : none;
+  border-top: 1px solid #fff;
+  padding   : 0;
+  margin    : 0 0 10.5pt 0;
+}
+
+legend {
+  color: #fff;
+  text-align: center;
+}
+
+label {
+  color         : #fff;
+  display       : block;
+  font-size     : 8pt;
+  text-transform: uppercase;
+}
+
+label * {
+  transition    : color 300ms ease-in-out;
+}
+
+input[type="text"] {
+  display         : block;
+
+  background-color: transparent;
+  border          : 1px solid white;
+  color           : white;
+
+  font-size       : 14pt;
+
+  box-sizing      : border-box;
+  margin          : 0 0 7pt 0;
+  padding         : 4pt;
+  width           : 100%;
+
+  transition      : border-color 300ms ease-in-out;
+}
+
+label .focused {
+  color: #FEC50D;
+}
+
+input[type="text"]:focus {
+  outline     : none;
+  border-color: #FEC50D;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Phyllotaxis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="styles/screen.css">
+</head>
+
+<body id="phyllotaxis">
+  <div
+    id="canvas"
+    v-component="{{ renderer }}"
+    v-with="
+      floretColor : floretColor,
+      floretCount : floretCount,
+      floretSize  : floretSize,
+      scale       : scale,
+      theta       : theta"
+    ></div>
+
+  <form
+    id="settings"
+    v-component="phyllotaxis-settings"></form>
+
+  <script src="js/lib.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
