@@ -1,14 +1,16 @@
-- [ ] Incremental builds with watchify
-- [x] Bundle dependencies separately for faster builds and loads
-- [ ] Add a README
-- [ ] Mirrored overlay
-- [ ] Custom radius functions (sin, cos, tan, _etc._)
 - [ ] Canvas implementation
-- [ ] Input validation
-- [ ] Phyllotaxis clock
-- [x] Tests
 - [ ] Code coverage
 - [ ] Comments!
+- [ ] Custom radius functions (sin, cos, tan, _etc._)
+- [ ] Docstrings!
+- [ ] Generate docs from docstrings
+- [ ] Incremental builds with watchify
 - [ ] Input formatting
+- [ ] Input validation
+- [ ] Mirrored overlay
+- [ ] Phyllotaxis clock
 - [ ] Reset button
-- [ ] Add scripts to package.json
+- [x] Add a README
+- [x] Add scripts to package.json
+- [x] Bundle dependencies separately for faster builds and loads
+- [x] Tests
