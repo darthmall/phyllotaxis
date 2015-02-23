@@ -6,31 +6,50 @@ var _ = require('lodash'),
     generatePhyllo = require('../phyllo-generator.js'); // function that does the phyllo math lives here
 
 // React component that draws the phyllotaxis
-// This implementation will attempt to use pure html5 canvas with no libraries for the sake of speed,
+// This implementation uses pure canvas with no libraries for the sake of speed,
 // bypassing React's Virtual DOM
 
 var Phyllotaxis = React.createClass({
-    getInitialState: function() {
+    propTypes: {
+        width: React.PropTypes.number,
+        height: React.PropTypes.number,
+        shouldClearOnFrame: React.PropTypes.bool,
+        numPoints: React.PropTypes.number,
+        angle: React.PropTypes.number,
+        radiusFunc: React.PropTypes.func,
+        thetaFunc: React.PropTypes.func,
+        colorFunc: React.PropTypes.func
+    },
+    getDefaultProps() {
+        return {
+            width: 500,
+            height: 500,
+            shouldClearOnFrame: true,
+            numPoints: 1000,
+            angle: 2.32058
+        }
+    },
+    getInitialState() {
         return {
             points: [],
             maxRadius: 0
         }
     },
-    shouldComponentUpdate: function() {
+    shouldComponentUpdate() {
         return false; // don't re-render canvas, repaint instead
     },
-    componentDidMount: function() {
+    componentDidMount() {
         // get canvas context (it will stay the same since we are short-circuiting re-render with shouldComponentUpdate)
         this.canvasContext = this.refs.canvas.getDOMNode().getContext('2d');
         // generate phyllo on initial component mount and paint canvas
         this.generatePhyllo(this.props, this.paintCanvas);
     },
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         // getting new props from parent, generate new phyllo state and paint canvas
         this.generatePhyllo(nextProps, this.paintCanvas);
     },
 
-    generatePhyllo: function(props, callback) {
+    generatePhyllo(props, callback) {
         // generate the points for the phyllo
         var phyllo = generatePhyllo({
             numPoints: props.numPoints,
@@ -46,16 +65,15 @@ var Phyllotaxis = React.createClass({
         }, callback || _.identity);
     },
 
-    paintCanvas: function() {
+    paintCanvas() {
         var ctx = this.canvasContext;
         var radiusDomain = [-1 * this.state.maxRadius, this.state.maxRadius], // can be sped up if maxR doesnt change
-            xScale = d3.scale.linear().domain(radiusDomain).range([0, 500]),
-            yScale = d3.scale.linear().domain(radiusDomain).range([0, 500]),
+            xScale = d3.scale.linear().domain(radiusDomain).range([0, this.props.width]),
+            yScale = d3.scale.linear().domain(radiusDomain).range([0, this.props.height]),
             pointSize = this.props.pointSize,
             twoPi = 2 * Math.PI;
 
-        ctx.clearRect( 0 , 0 , 500, 500);
-        ctx.fillStyle = 'green';
+        ctx.clearRect(0, 0, this.props.width, this.props.height);
 
         for(var i=0; i<this.state.points.length; i++) {
             var coords = this.state.points[i];
@@ -66,13 +84,9 @@ var Phyllotaxis = React.createClass({
         }
     },
 
-    render: function() {
-        var radiusDomain = [-1 * this.state.maxRadius, this.state.maxRadius], // can be sped up if maxR doesnt change
-            xScale = d3.scale.linear().domain(radiusDomain).range([0, 500]),
-            yScale = d3.scale.linear().domain(radiusDomain).range([0, 500]);
-
+    render() {
         return (
-            <canvas ref="canvas" height={500} width={500}>
+            <canvas ref="canvas" height={this.props.width} width={this.props.height}>
             </canvas>
         );
     }

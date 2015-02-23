@@ -12,10 +12,15 @@ var _ = require('lodash'),
 var PhylloApp = React.createClass({
     getInitialState: function() {
         return {
-            numPoints: 500, // number of points in phyllo
-            pointSize: 9, // radius of each point in phyllo
-            angle: 2.4, // starting angle for the phyllo
-            angleStep: 0.00001, // radians the phyllo angle changes each animation step
+            height: window.innerHeight - 36,
+            width: window.innerHeight - 36,
+
+            numPoints: 3000, // number of points in phyllo
+            pointSize: 3, // radius of each point in phyllo
+            // starting angle for the phyllo
+            //angle: 2.320585, // empirically discovered local maxima(?)
+            angle: 2 * Math.PI * Math.pow((Math.sqrt(5) + 1) / 2, -2), // Fibonacci Angle!
+            angleStep: 0.000005, // radians the phyllo angle changes each animation step
 
 
             // function controlling angle theta of point n (polar coordinate)
@@ -24,21 +29,23 @@ var PhylloApp = React.createClass({
             radiusFunc: function(n, angle, theta, numPoints) { return Math.sqrt(n); },
             // function controlling color of point n
             //colorFunc: function(n, angle, theta, radius, numPoints) { return '#000000'; }
-            colorFunc: function(n, angle, theta, radius, numPoints) { return d3.hsl((Math.sqrt(n) * angle * 3) + 30, .7, 0.4); }
+            colorFunc: function(n, angle, theta, radius, numPoints) { return d3.hsl(Math.cos(theta) * 60, .7, 0.4); }
         };
     },
 
     componentDidMount: function() {
         // start animating right away on initial load
-        this.animate();
+        //this.animate();
     },
 
     animate: function() {
-        this.animationInterval = setInterval(this.onAnimationFrame, 20);
+        //this.animationInterval = setInterval(this.onAnimationFrame, 20);
+        this.animRequest = window.requestAnimationFrame(this.onAnimationFrame);
         this.setState({isPlaying: true});
     },
     pause: function() {
-        if(this.animationInterval) clearInterval(this.animationInterval);
+        //if(this.animationInterval) clearInterval(this.animationInterval);
+        if(this.animRequest) window.cancelAnimationFrame(this.animRequest);
         this.setState({isPlaying: false});
     },
     toggleAnimate: function() {
@@ -50,6 +57,7 @@ var PhylloApp = React.createClass({
         var newAngle = this.state.angle + this.state.angleStep;
         newAngle = Number(newAngle.toFixed(12)); // round to 12 decimal places, avoid floating point rounding errors
         this.setState({angle: newAngle});
+        this.animRequest = window.requestAnimationFrame(this.onAnimationFrame);
     },
     onControlPanelChange: function(panelState) {
         // got new state from the control panel. update app state to reflect this, triggering re-render
@@ -58,8 +66,10 @@ var PhylloApp = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div id="phyllo-app" style={{'background-color':'#333'}}>
                 <Phyllotaxis
+                    width={this.state.width}
+                    height={this.state.height}
                     numPoints={this.state.numPoints}
                     pointSize={this.state.pointSize}
                     angle={this.state.angle}
@@ -68,6 +78,7 @@ var PhylloApp = React.createClass({
                     thetaFunc={this.state.thetaFunc}
                     colorFunc={this.state.colorFunc}
                 />
+
                 <ControlPanel
                     isPlaying={this.state.isPlaying}
 
@@ -92,19 +103,23 @@ var PhylloApp = React.createClass({
     }
 });
 
+// empirically derived 2nd-best phyllotaxis angle -dd
+// 2.320585
+
 // butterfly radius function:
 // var sinPow5 = function(theta) { return (10*Math.sin(theta) - 5*Math.sin(3*theta) + Math.sin(5*theta)) / 16; }; return Math.pow(Math.E, Math.sin(theta)) - (2*Math.cos(4*theta)) + sinPow5(((2*theta) - Math.PI) / 24);
 
 // cannabis curve http://mathworld.wolfram.com/CannabisCurve.html
 // return (1 + ((9/10)*Math.cos(8*theta))) * (1 + ((1/10)*Math.cos(24*theta))) * ((9/10) + ((1/10)*Math.cos(200*theta))) * (1 + Math.sin(theta));
 
+// tangent rainbow
+//return d3.hsl(Math.cos(theta) * Math.tan(angle * 1233.93) * 60, 0.7, 0.4);
 
-// devils curve
-//var a2 = 1, b2=2, sin2=function(theta) { return (1 - Math.cos(2*theta)) / 2; }, cos2=function(theta) { return (1 + Math.cos(2*theta)) / 2; };
-// return Math.sqrt( ((1*sin2(theta)) - (2*cos2(theta))) / (sin2(theta) - cos2(theta)))
+// color wheel
+// return d3.hsl((theta % (2*Math.PI)) * 57.29, 1, (radius / (angle-2) * .002));
 
 
-React.render(<PhylloApp />, document.getElementById('phyllo-app'));
+React.render(<PhylloApp />, document.getElementById('phyllo-app-container'));
 
 _.extend(window, {
     _: _,

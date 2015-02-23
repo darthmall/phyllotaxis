@@ -1,16 +1,76 @@
-.number-input, .function-input {
-  display: block;
-  .function-signature {
-    font-weight: bold;
-    display: inline-block;
-    margin-left: 10px;
-  }
-  
-  input {
-    display: inline-block;
-    margin-left: 20px;
-  }
-  &.invalid-value input {
-    background-color: #ffbbbb;
-  }
+@import (less) "lib/normalize.css"; /* Normalize.css - render elements consistently and in line with standards */
+@import "lib/lesshat.less"; /* LESS Hat - collection of LESS mixins */
+@import "lib/palette.less"; /* Color palette from Google's Material Design styles */
+@import "lib/ionicons/ionicons.less"; /* Ionicons icon font */
+@import "avenir.less";
+
+@navBarHeight: 36px;
+
+body {
+    font-family: AvenirWeb, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+#nav-bar {
+    .background-image(linear-gradient(to right, @blue-500 0%, @indigo-800 100%));
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: @navBarHeight;
+    line-height: @navBarHeight;
+    padding: 0 20px;
+    font-size: 13pt;
+    color: #efefef;
+    z-index: 5000;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.8);
+}
+
+.control-panel {
+    position: fixed;
+    box-sizing: border-box;
+    overflow-y: auto;
+    width: 350px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    background-color: #ddd;
+    padding: 20px;
+
+    .play-button {
+        font-family: AvenirWeb, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16pt;
+        background-color: @indigo-800;
+        color: #efefef;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+        display: block;
+        margin: 40px auto 20px;
+        width: 150px;
+        cursor: pointer;
+    }
+}
+
+canvas {
+    margin-top: @navBarHeight;
+}
+
+.number-input {
+    display: block;
+    margin: 4px 0;
+
+    input {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    &.invalid-value input {
+        background-color: #ffbbbb;
+    }
+}
+
+.function-input {
+    textarea {
+        width: 100%;
+    }
 }

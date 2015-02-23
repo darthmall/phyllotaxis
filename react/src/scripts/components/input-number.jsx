@@ -12,7 +12,7 @@ var NumberInput = React.createClass({
         this.setState({inputValue: this.props.value, isValid: true});
     },
     componentWillReceiveProps: function(nextProps) {
-        isSameNumberAsInputValue = (Number(nextProps.value) === Number(this.state.inputValue));
+        var isSameNumberAsInputValue = (Number(nextProps.value) === Number(this.state.inputValue));
         if(!isSameNumberAsInputValue) this.setState({inputValue: nextProps.value, isValid: true});
 
         // REACT DRAGONS HERE: Note that we only update state.inputValue (the text in the input field)

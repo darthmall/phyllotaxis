@@ -57,11 +57,11 @@ var FunctionInput = React.createClass({
     },
     render: function() {
         return (
-            <label className={'function-input' + (this.state.isValid ? '' : ' invalid-value')}>
-                {this.props.label}
-                <span className="function-signature">f({this.props.funcParams.join(', ')})</span>
-                <input type="text" value={this.state.inputValue} onChange={this.onChange} />
-            </label>
+            <div className={'function-input' + (this.state.isValid ? '' : ' invalid-value')}>
+                <div>{this.props.label}</div>
+                <div className="function-signature">f({this.props.funcParams.join(', ')})</div>
+                <textarea value={this.state.inputValue} onChange={this.onChange} />
+            </div>
         );
     }
 });
