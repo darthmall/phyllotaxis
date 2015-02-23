@@ -19,7 +19,7 @@ function polarToCartesian(r, theta) { return [r * Math.cos(theta), r * Math.sin(
 
 function generatePhyllotaxis(options) {
     options = defaultOptions(options || {}, { // default phyllo options
-        angle: 2.4,
+        angle: 2.32058,
         numPoints: 200,
         thetaFunc: function(n, angle, numPoints) { return angle * n; },
         radiusFunc: function(n, angle, theta, numPoints) { return Math.sqrt(n); },
@@ -27,7 +27,7 @@ function generatePhyllotaxis(options) {
     });
     var maxRadius = 0, points = [];
 
-    for (n = 1; n <= options.numPoints; n++) {
+    for (var n = 1; n <= options.numPoints; n++) {
         var theta = options.thetaFunc(n, options.angle, options.numPoints),
             r = options.radiusFunc(n, options.angle, theta, options.numPoints),
             color = options.colorFunc(n, options.angle, theta, r, options.numPoints),

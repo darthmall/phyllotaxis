@@ -26,13 +26,13 @@ var ControlPanel = React.createClass({
 
     render: function() {
         return (
-            <div>
-                <button onClick={this.props.onToggleAnimate}>
+            <div className='control-panel'>
+                <button className='play-button' onClick={this.props.onToggleAnimate}>
                     {this.props.isPlaying ? "Pause" : "Play"}
                 </button>
 
                 <NumberInput
-                    label="Number of Points"
+                    label="# Points"
                     value={this.props.numPoints}
                     onValidChange={this.onStateChange('numPoints')}
                 />
