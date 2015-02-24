@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var _ = require('lodash'),
     React = require('react'),
 
@@ -6,30 +5,36 @@ var _ = require('lodash'),
     FunctionInput = require('./input-function.jsx');
 
 var ControlPanel = React.createClass({
-    onChangeNumPoints: function(newValue) { this.props.onStateChange({numPoints: newValue}); },
-    onChangePointSize: function(newValue) { this.props.onStateChange({pointSize: newValue}); },
-    onChangeAngle: function(newValue) { this.props.onStateChange({angle: newValue}); },
-    onChangeAngleStep: function(newValue) { this.props.onStateChange({angleStep: newValue}); },
+    propTypes: {
 
-    onChangeRadiusFunc: function(newValue) { this.props.onStateChange({radiusFunc: newValue}); },
-    onChangeThetaFunc: function(newValue) { this.props.onStateChange({thetaFunc: newValue}); },
-    onChangeColorFunc: function(newValue) { this.props.onStateChange({colorFunc: newValue}); },
+    },
+    getInitialState() {
+        return { selectedSavedKey: null };
+    },
 
     onStateChange: function(stateKey) {
         // create callback function for the provided key
         return _.bind(function(newValue) {
-            var newState = {};
-            newState[stateKey] = newValue;
-            this.props.onStateChange(newState);
+            this.props.onStateChange({[stateKey]: newValue});
         }, this);
     },
-
     onBooleanStateChange(stateKey) {
-        return _.bind(function(event) {
-            var newState = {};
-            newState[stateKey] = event.target.checked;
-            this.props.onStateChange(newState);
-        }, this);
+        return event => {
+            this.props.onStateChange({[stateKey]: event.target.checked});
+        };
+    },
+    onTextStateChange(stateKey) {
+        return event => {
+            this.props.onStateChange({[stateKey]: event.target.value});
+        };
+    },
+
+    onSelectSaved(event) {
+        this.setState({selectedSavedKey: event.target.value})
+    },
+    onClickLoad(event) {
+        if(_.isNull(this.state.selectedSavedKey)) return;
+        this.props.onLoadKey(this.state.selectedSavedKey);
     },
 
     render: function() {
@@ -50,6 +55,17 @@ var ControlPanel = React.createClass({
                     </label>
                 </div>
 
+                <div>
+                    <label className='text-input'>
+                        <input
+                            type="text"
+                            value={this.props.backgroundColor}
+                            onChange={this.onTextStateChange('backgroundColor')}
+                        />
+                        <span>Background Color</span>
+                    </label>
+                </div>
+
                 <NumberInput
                     label="# Points"
                     value={this.props.numPoints}
@@ -64,36 +80,60 @@ var ControlPanel = React.createClass({
 
                 <NumberInput
                     label="Angle"
-                    value={this.props.angle}
-                    onValidChange={this.onStateChange('angle')}
+                    value={this.props.x}
+                    onValidChange={this.onStateChange('x')}
                 />
 
                 <NumberInput
                     label="Angle step"
-                    value={this.props.angleStep}
-                    onValidChange={this.onStateChange('angleStep')}
+                    value={this.props.xStep}
+                    onValidChange={this.onStateChange('xStep')}
                 />
 
                 <FunctionInput
                     label="Radius"
-                    value={this.props.radiusFunc}
-                    funcParams={this.props.radiusFuncParams}
-                    onValidChange={this.onStateChange('radiusFunc')}
+                    value={this.props.radius}
+                    funcParams={this.props.radiusParams}
+                    onValidChange={this.onStateChange('radius')}
                 />
 
                 <FunctionInput
                     label="Theta"
-                    value={this.props.thetaFunc}
-                    funcParams={this.props.thetaFuncParams}
-                    onValidChange={this.onStateChange('thetaFunc')}
+                    value={this.props.theta}
+                    funcParams={this.props.thetaParams}
+                    onValidChange={this.onStateChange('theta')}
                 />
 
                 <FunctionInput
                     label="Color"
-                    value={this.props.colorFunc}
-                    funcParams={this.props.colorFuncParams}
-                    onValidChange={this.onStateChange('colorFunc')}
+                    value={this.props.color}
+                    funcParams={this.props.colorParams}
+                    onValidChange={this.onStateChange('color')}
                 />
+
+                <div>
+                    <label className='text-input'>
+                        <input
+                            type="text"
+                            value={this.props.name}
+                            onChange={this.onTextStateChange('name')}
+                        />
+                        <span>Save as</span>
+                    </label>
+                </div>
+
+                <button onClick={this.props.onClickSave}>Save</button>
+
+                <div>
+                    <select value={this.state.selectedSavedKey} onChange={this.onSelectSaved}>
+                    {_.map(this.props.savedKeys, (val, key) => {
+                        return <option key={key} value={key}>{key}</option>
+                    })}
+                    </select>
+                </div>
+
+                <button onClick={this.onClickLoad}>Load</button>
+
             </div>
         );
     }

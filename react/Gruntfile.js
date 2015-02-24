@@ -51,8 +51,9 @@ module.exports = function(grunt) {
         browserify: {
             dev: {
                 options: {
-                    //transform: ['reactify'],
-                    transform: ['6to5ify'], // es6 to es5 + jsx transpile
+                    //transform: ['reactify'], // jsx transpile
+                    //transform: ['6to5ify'], // es6 to es5 + jsx transpile
+                    transform: ['babelify'], // jeez who can keep up these days?
                     browserifyOptions: {debug: true}
                 },
                 files: {'build/scripts/main.js': ['src/scripts/main.jsx']}

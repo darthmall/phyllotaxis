@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var _ = require('lodash'),
     d3 = require('d3'),
     React = require('react'),
@@ -15,10 +14,10 @@ var Phyllotaxis = React.createClass({
         height: React.PropTypes.number,
         shouldClearOnFrame: React.PropTypes.bool,
         numPoints: React.PropTypes.number,
-        angle: React.PropTypes.number,
-        radiusFunc: React.PropTypes.func,
-        thetaFunc: React.PropTypes.func,
-        colorFunc: React.PropTypes.func
+        x: React.PropTypes.number,
+        radius: React.PropTypes.func,
+        theta: React.PropTypes.func,
+        color: React.PropTypes.func
     },
     getDefaultProps() {
         return {
@@ -26,7 +25,7 @@ var Phyllotaxis = React.createClass({
             height: 500,
             shouldClearOnFrame: true,
             numPoints: 1000,
-            angle: 2.32058
+            x: 1
         }
     },
     getInitialState() {
@@ -53,10 +52,10 @@ var Phyllotaxis = React.createClass({
         // generate the points for the phyllo
         var phyllo = generatePhyllo({
             numPoints: props.numPoints,
-            angle: props.angle,
-            radiusFunc: props.radiusFunc,
-            thetaFunc: props.thetaFunc,
-            colorFunc: props.colorFunc
+            x: props.x,
+            radius: props.radius,
+            theta: props.theta,
+            color: props.color
         });
         // update this.state with the new phyllo points
         this.setState({

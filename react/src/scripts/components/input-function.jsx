@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
 var _ = require('lodash'),
     React = require('react');
 
-var funcBeginRegEx =  /^function\s*\([\w,\s]*\)\s*\{\s*/, // 'function(a,b,c) { '
+var funcBeginRegEx =  /^\s*function\s*\w*\(([\w,\s]*[\n\/\*]*)\)\s*\{[\s\n]*/, // 'function(a,b,c) { '
     funcEndRegEx = /\s*}\s*$/; // ' } '
 
 function unwrapFuncStr(funcStr) {

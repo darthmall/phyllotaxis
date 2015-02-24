@@ -15,24 +15,39 @@ function defaultOptions(options, defaults) {
     return newOptions;
 }
 
+function toFunction(value, parse) {
+    if(typeof value == 'function') return value;
+    parse = parse || function(x) { return x; };
+    return function() { return parse(value); }
+}
+
 function polarToCartesian(r, theta) { return [r * Math.cos(theta), r * Math.sin(theta)]; }
 
 function generatePhyllotaxis(options) {
     options = defaultOptions(options || {}, { // default phyllo options
-        angle: 2.32058,
+        x: 1, // free variable passed into all functions... use for whatever... like animation!
         numPoints: 200,
-        thetaFunc: function(n, angle, numPoints) { return angle * n; },
-        radiusFunc: function(n, angle, theta, numPoints) { return Math.sqrt(n); },
-        colorFunc: function(n, angle, theta, radius, numPoints) { return '#000'; }
+        theta: function(n, x, numPoints) {
+            var fibonacciAngle = 2 * Math.PI * Math.pow((Math.sqrt(5) + 1) / 2, -2);
+            return fibonacciAngle * n;
+        },
+        radius: function(n, x, theta, numPoints) { return Math.sqrt(n); },
+        color: '#000',
+        size: 4
     });
+    options.theta = toFunction(options.theta, Number);
+    options.radius = toFunction(options.radius, Number);
+    options.color = toFunction(options.color, String);
+    options.size = toFunction(options.size, Number);
     var maxRadius = 0, points = [];
 
-    for (var n = 1; n <= options.numPoints; n++) {
-        var theta = options.thetaFunc(n, options.angle, options.numPoints),
-            r = options.radiusFunc(n, options.angle, theta, options.numPoints),
-            color = options.colorFunc(n, options.angle, theta, r, options.numPoints),
+    for(var n = 1; n <= options.numPoints; n++) {
+        var theta = options.theta(n, options.x, options.numPoints),
+            r = options.radius(n, options.x, theta, options.numPoints),
+            color = options.color(n, options.x, theta, r, options.numPoints),
+            size = options.size(n, options.x, theta, r, options.numPoints),
             coords = polarToCartesian(r, theta);
-        points.push([coords[0], coords[1], color]);
+        points.push([coords[0], coords[1], color, size]);
         maxRadius = Math.max(maxRadius, r);
     }
 
