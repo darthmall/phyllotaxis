@@ -26,7 +26,7 @@ var CanvasRenderer = {
         return;
       }
       console.debug('draw');
-      
+
       var canvas = this.$el.getElementsByTagName('canvas')[0];
       var ctx    = canvas.getContext('2d');
 
@@ -55,8 +55,10 @@ var CanvasRenderer = {
   watch: {
     'floretCount' : 'draw',
     'floretSize'  : 'draw',
+    'height'      : 'draw',
     'scale'       : 'draw',
-    'theta'       : 'draw'
+    'theta'       : 'draw',
+    'width'       : 'draw',
   }
 };
 
