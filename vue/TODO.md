@@ -1,4 +1,4 @@
-- [ ] Canvas implementation
+- [x] Canvas implementation
 - [ ] Code coverage
 - [ ] Comments!
 - [ ] Custom radius functions (sin, cos, tan, _etc._)
@@ -14,3 +14,7 @@
 - [x] Add scripts to package.json
 - [x] Bundle dependencies separately for faster builds and loads
 - [x] Tests
+- [ ] Hyphae growth
+- [ ] Flocking
+- [ ] Custom radius functions
+- [ ] Local storage
