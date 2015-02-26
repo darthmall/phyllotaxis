@@ -47,7 +47,7 @@
     <div
       v-component="phyllotaxis-input"
       v-with="value: fps"
-      data-step="0.0001">
+      data-step="1">
       Speed
     </div>
 

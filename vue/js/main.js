@@ -25,6 +25,7 @@ var Phyllotaxis = {
 
     // Animation
     fps          : 60,
+    lastFrame    : 0,
     playing      : false,
     step         : 0.0001
   },
@@ -50,10 +51,17 @@ var Phyllotaxis = {
 
     animate: function () {
       if (this.playing) {
-        this.theta      += this.step;
-        this.floretColor = this.colored ?
-          d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
-          '#333333';
+        var now     = (new Date()).getTime();
+        var elapsed = now - this.lastFrame;
+        var mspf    = 1000 / this.fps;
+
+        if (elapsed >= mspf) {
+          this.lastFrame   = now;
+          this.theta      += this.step;
+          this.floretColor = this.colored ?
+            d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
+            '#333333';
+        }
 
         window.requestAnimationFrame(this.animate);
       }
@@ -62,7 +70,6 @@ var Phyllotaxis = {
 
   watch: {
     'colored': function () {
-      console.log(degrees(this.theta));
       this.floretColor = this.colored ?
         d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
         '#333333';

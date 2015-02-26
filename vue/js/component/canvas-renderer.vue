@@ -25,7 +25,6 @@ var CanvasRenderer = {
       if (!(this.theta && this.floretCount && this.floretSize && this.scale)) {
         return;
       }
-      console.debug('draw');
 
       var canvas = this.$el.getElementsByTagName('canvas')[0];
       var ctx    = canvas.getContext('2d');
