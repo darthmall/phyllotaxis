@@ -18,7 +18,7 @@ var Phyllotaxis = {
     floretCount  : 200,
 
     // Rendering
-    renderer     : 'phyllotaxis-svg-renderer',
+    renderer     : 'phyllotaxis-canvas-renderer',
     colored      : false,
     floretColor  : '#333333',
     floretSize   : 5,
@@ -70,9 +70,10 @@ var Phyllotaxis = {
   },
 
   components: {
-    'phyllotaxis-input'        : require('component/input.vue'),
-    'phyllotaxis-settings'     : require('component/settings.vue'),
-    'phyllotaxis-svg-renderer' : require('component/svg-renderer.vue')
+    'phyllotaxis-input'           : require('component/input.vue'),
+    'phyllotaxis-settings'        : require('component/settings.vue'),
+    'phyllotaxis-svg-renderer'    : require('component/svg-renderer.vue'),
+    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer.vue')
   }
 };
 

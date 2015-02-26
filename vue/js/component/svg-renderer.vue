@@ -19,16 +19,16 @@
 'use strict';
 
 var SVGCanvas = {
+
+  mixins: [
+    require('mixin/resize')
+  ],
+
   data: function () {
     return {
       height : 1,
       width  : 1,
     };
-  },
-
-  ready: function () {
-    window.addEventListener('resize', this);
-    this.onResize();
   },
 
   computed: {
@@ -40,27 +40,6 @@ var SVGCanvas = {
       }
 
       return f;
-    }
-  },
-
-  methods: {
-    handleEvent: function (evt) {
-      switch (evt.type) {
-        case 'resize':
-          this.onResize();
-          break;
-
-        default:
-          break;
-      }
-    },
-
-    onResize: function () {
-      this.height = this.$el.clientHeight;
-      this.width  = this.$el.clientWidth;
-
-      console.debug(this.height);
-      console.debug(this.width);
     }
   },
 
