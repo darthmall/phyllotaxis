@@ -22,7 +22,7 @@ var path = {
   'libs'       : Object.keys(pkg.dependencies),
   'main'       : 'main.js',
   'scripts'    : 'js/**/*.js',
-  'styles'     : ['styles/**/*.less', '!styles/**/_*.less'],
+  'styles'     : ['styles/**/*.{less,css}', '!styles/**/_*.less'],
   'tests'      : './tests/**/*.js'
 };
 
@@ -97,9 +97,13 @@ gulp.task('fonts', function () {
 
 // Compile styles into the build directory
 gulp.task('styles', function () {
+  var filter = $.filter('**/*.less');
+
   return gulp.src(path.styles)
+    .pipe(filter)
     .pipe($.less())
     .on('error', err)
+    .pipe(filter.restore())
     .pipe(gulp.dest(path.build + 'styles'));
 });
 
