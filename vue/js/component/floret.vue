@@ -1,7 +1,6 @@
 <template>
   <circle
     class="floret"
-    v-if="defined"
     v-attr="
       cx: cx,
       cy: cy,
