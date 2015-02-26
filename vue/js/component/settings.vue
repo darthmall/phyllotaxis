@@ -39,6 +39,11 @@
 
   <fieldset>
     <legend>Animation</legend>
+    <select v-model="renderer">
+      <option value="phyllotaxis-canvas-renderer">Canvas</option>
+      <option value="phyllotaxis-svg-renderer">SVG</option>
+    </select>
+
     <div
       v-component="phyllotaxis-input"
       v-with="value: fps"
