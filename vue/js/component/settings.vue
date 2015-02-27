@@ -9,7 +9,7 @@
 
      <div
        v-component="phyllotaxis-input"
-       v-with="value: theta"
+       v-with="value: angle"
        data-step="0.0001">
        Angle
      </div>
@@ -19,7 +19,7 @@
     <legend>Florets</legend>
     <div
       v-component="phyllotaxis-input"
-      v-with="value: floretCount">
+      v-with="value: size">
       Count
     </div>
 
@@ -43,13 +43,6 @@
       <option value="phyllotaxis-canvas-renderer">Canvas</option>
       <option value="phyllotaxis-svg-renderer">SVG</option>
     </select>
-
-    <div
-      v-component="phyllotaxis-input"
-      v-with="value: fps"
-      data-step="1">
-      Speed
-    </div>
 
     <div
       v-component="phyllotaxis-input"

@@ -8,6 +8,8 @@
 <script>
 'use strict';
 
+var Phyllotaxis = require('system/phyllotaxis');
+
 var CanvasRenderer = {
   mixins: [
     require('mixin/resize')
@@ -16,13 +18,17 @@ var CanvasRenderer = {
   data: function () {
     return {
       height : 1,
-      width  : 1
+      width  : 1,
+
+      color  : 'black',
+      size   : 0,
+      system : null,
     };
   },
 
   methods: {
     draw: function () {
-      if (!(this.theta && this.floretCount && this.floretSize && this.scale)) {
+      if (!(this.system && this.size)) {
         return;
       }
 
@@ -33,16 +39,12 @@ var CanvasRenderer = {
 
       ctx.clearRect(0, 0, this.width, this.height);
 
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = this.color;
       ctx.translate(this.width / 2, this.height / 2);
 
-      for (var i = 0; i < this.floretCount; i++) {
-        var r = this.scale * Math.sqrt(i);
-        var x = r * Math.cos(i * this.theta);
-        var y = r * Math.sin(i * this.theta);
-
+      for (var iter = this.system.iter, p = iter.next(); p; p = iter.next()) {
         ctx.beginPath();
-        ctx.arc(x, y, this.floretSize, 0, Math.PI * 2, false);
+        ctx.arc(p.x, p.y, this.size, 0, Math.PI * 2, false);
         ctx.fill();
         ctx.closePath();
       }
@@ -51,13 +53,16 @@ var CanvasRenderer = {
     }
   },
 
+  events: {
+    'draw' : 'draw'
+  },
+
   watch: {
-    'floretCount' : 'draw',
-    'floretSize'  : 'draw',
-    'height'      : 'draw',
-    'scale'       : 'draw',
-    'theta'       : 'draw',
-    'width'       : 'draw',
+    'height' : 'draw',
+    'width'  : 'draw',
+    'system' : 'draw',
+    'size'   : 'draw',
+    'color'  : 'draw'
   }
 };
 

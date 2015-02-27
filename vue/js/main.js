@@ -1,21 +1,31 @@
 /* global window */
 'use strict';
 
-var Vue = require('vue');
-var d3  = require('d3');
+var Vue         = require('vue');
+var d3          = require('d3');
+
+var Phyllotaxis = require('system/phyllotaxis');
 
 function degrees(rad) {
   return rad * 180 / Math.PI;
 }
 
+var DEFAULT = {
+  scale : 15,
+  angle : 2.39982772,
+  size  : 200,
+};
+
 var Phyllotaxis = {
   el       : '#phyllotaxis',
 
   data: {
+    system       : new Phyllotaxis(DEFAULT.scale, DEFAULT.angle, DEFAULT.size),
+
     // Computation inputs
-    scale        : 15,
-    theta        : 2.39982772,
-    floretCount  : 200,
+    scale        : DEFAULT.scale,
+    angle        : DEFAULT.angle,
+    size         : DEFAULT.size,
 
     // Rendering
     renderer     : 'phyllotaxis-canvas-renderer',
@@ -24,7 +34,6 @@ var Phyllotaxis = {
     floretSize   : 5,
 
     // Animation
-    fps          : 60,
     lastFrame    : 0,
     playing      : false,
     step         : 0.0001
@@ -35,6 +44,17 @@ var Phyllotaxis = {
   },
 
   methods: {
+    animate: function () {
+      if (this.playing) {
+        this.angle      += this.step;
+        this.floretColor = this.colored ?
+          d3.hsl(degrees(this.angle), 0.5, 0.5).toString() :
+          '#333333';
+      }
+
+      window.requestAnimationFrame(this.animate);
+    },
+
     handleEvent: function (evt) {
       switch (evt.type) {
         case 'keyup':
@@ -45,34 +65,38 @@ var Phyllotaxis = {
           break;
 
         default:
+          console.debug('key:', evt.keyCode);
           break;
       }
     },
 
-    animate: function () {
-      if (this.playing) {
-        var now     = (new Date()).getTime();
-        var elapsed = now - this.lastFrame;
-        var mspf    = 1000 / this.fps;
-
-        if (elapsed >= mspf) {
-          this.lastFrame   = now;
-          this.theta      += this.step;
-          this.floretColor = this.colored ?
-            d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
-            '#333333';
-        }
-
-        window.requestAnimationFrame(this.animate);
-      }
+    reset: function () {
+      this.angle = DEFAULT.angle;
+      this.scale = DEFAULT.scale;
+      this.size  = DEFAULT.size;
     }
   },
 
   watch: {
     'colored': function () {
       this.floretColor = this.colored ?
-        d3.hsl(degrees(this.theta), 0.5, 0.5).toString() :
+        d3.hsl(degrees(this.angle), 0.5, 0.5).toString() :
         '#333333';
+    },
+
+    'angle': function () {
+      this.system.angle = this.angle;
+      this.$broadcast('draw');
+    },
+
+    'scale': function () {
+      this.system.scale = this.scale;
+      this.$broadcast('draw');
+    },
+
+    'size': function () {
+      this.system.size = this.size;
+      this.$broadcast('draw');
     }
   },
 
