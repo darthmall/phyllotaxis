@@ -41,6 +41,7 @@
     <legend>Animation</legend>
     <select v-model="renderer">
       <option value="phyllotaxis-canvas-renderer">Canvas</option>
+      <option value="phyllotaxis-line-renderer">Line</option>
       <option value="phyllotaxis-svg-renderer">SVG</option>
     </select>
 

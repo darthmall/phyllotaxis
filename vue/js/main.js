@@ -104,7 +104,8 @@ var Phyllotaxis = {
     'phyllotaxis-input'           : require('component/input.vue'),
     'phyllotaxis-settings'        : require('component/settings.vue'),
     'phyllotaxis-svg-renderer'    : require('component/svg-renderer.vue'),
-    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer.vue')
+    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer.vue'),
+    'phyllotaxis-line-renderer'   : require('component/line-renderer')
   }
 };
 
