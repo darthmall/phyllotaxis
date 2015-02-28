@@ -96,3 +96,22 @@ input[type="text"] {
 label .focused {
   color: @primary-color;
 }
+
+.button-box {
+  display        : flex;
+  align-items    : stretch;
+  flex-direction : row;
+
+  button {
+    flex-grow: 1;
+    margin: 0 4px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
