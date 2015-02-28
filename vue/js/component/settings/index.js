@@ -2,7 +2,13 @@
 
 var Settings = {
   template : require('./template.html'),
-  inherit  : true
+  inherit  : true,
+
+  methods: {
+    preventFocus: function (el) {
+      el.blur();
+    }
+  }
 };
 
 module.exports = Settings;

@@ -57,13 +57,16 @@
     type="button"
     class="primary"
     v-class="on : playing"
+    v-on="click : preventFocus($event.target)"
     v-dispatch="click : 'toggle-play'">Play</button>
 
   <button
     type="button"
+    v-on="click : preventFocus($event.target)"
     v-dispatch="click : 'save-settings'">Save</button>
 </div>
 
 <button
   type="button"
+  v-on="click : preventFocus($event.target)"
   v-dispatch="click : 'reset'">Reset</button>
