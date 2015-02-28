@@ -19,9 +19,12 @@
   }
 }
 
-button {
+button,
+.button,
+*[role=button] {
   background-color : #fff;
-  border           : 2px solid @gray;
+  border           : 1px solid @gray;
+  border-radius    : 3px;
   color            : @gray;
 
   transition       : all 200ms ease;
@@ -30,16 +33,34 @@ button {
     outline: none;
   }
 
-  &:active,
-  &.on {
-    background-color : @secondary-color;
-    border-color     : @secondary-color;
+  &:active {
+    background-color : @light-gray;
     outline          : none;
-    color            : #fff;
   }
 
-  &[disabled] {
+  &.on {
+    background-color : @gray;
+    color            : white;
+  }
+
+  &[disabled],
+  .disabled {
     border-color : @light-gray;
     color        : @light-gray;
+  }
+
+  &.primary,
+  &[type=submit] {
+    border-color : @secondary-color;
+    color        : @secondary-color;
+
+    &:active {
+      background-color: lighten(@secondary-color, 30%);
+    }
+
+    &.on {
+      background-color : @secondary-color;
+      color            : white;
+    }
   }
 }
