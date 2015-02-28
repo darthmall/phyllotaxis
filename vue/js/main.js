@@ -87,13 +87,8 @@ var Phyllotaxis = {
         default:
           break;
       }
-    },
-
-    reset: function () {
-      this.angle = DEFAULT.angle;
-      this.scale = DEFAULT.scale;
-      this.size  = DEFAULT.size;
     }
+
   },
 
   events: {
@@ -103,6 +98,12 @@ var Phyllotaxis = {
     },
 
     'save-settings': function () {
+    },
+
+    'reset': function () {
+      this.angle = DEFAULT.angle;
+      this.scale = DEFAULT.scale;
+      this.size  = DEFAULT.size;
     }
   },
 
