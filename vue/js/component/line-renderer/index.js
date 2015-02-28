@@ -1,20 +1,9 @@
 'use strict';
 
 var LineRenderer = {
-  template: require('./canvas-renderer.html'),
-
   mixins: [
-    require('mixin/resize')
+    require('component/canvas-renderer')
   ],
-
-  data: function () {
-    return {
-      height : 0,
-      width  : 0,
-      system : null,
-      size   : 0
-    };
-  },
 
   methods: {
     draw: function () {
@@ -52,18 +41,6 @@ var LineRenderer = {
 
       ctx.restore();
     }
-  },
-
-  events: {
-    'draw' : 'draw'
-  },
-
-  watch: {
-    'height' : 'draw',
-    'width'  : 'draw',
-    'system' : 'draw',
-    'size'   : 'draw',
-    'color'  : 'draw'
   }
 };
 

@@ -1,0 +1,26 @@
+<label>
+  <span v-class="focused: hasFocus">
+    <content></content>
+  </span>
+
+  <div class="stepper">
+    <input
+      type="text"
+      v-model="value"
+      v-on="
+        keyup: decrement | key down,
+        keyup: increment | key up,
+        focus: hasFocus = true,
+        blur: hasFocus = false"
+      number>
+
+    <div class="buttons">
+      <button
+        type="button"
+        v-on="click: increment">+</button>
+      <button
+        type="button"
+        v-on="click: decrement">-</button>
+    </div>
+  </div>
+</label>

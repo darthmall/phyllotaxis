@@ -22,7 +22,7 @@ var path = {
   'libs'       : Object.keys(pkg.dependencies),
   'main'       : 'main.js',
   'scripts'    : 'js/**/*.js',
-  'styles'     : ['styles/**/*.{less,css}', '!styles/**/_*.less'],
+  'styles'     : ['styles/**/*.{less,css}', 'js/component/**/*.less', '!styles/**/_*.less'],
   'tests'      : './tests/**/*.js'
 };
 
@@ -30,9 +30,13 @@ var path = {
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+function say(msg) {
+  exec('say -v Fred "' + msg + '"');
+}
+
 function err(e) {
   $.util.log(e.message);
-  exec('say -v Fred "Build failed"');
+  say('Build failed');
 
   // jshint validthis: true
   this.emit('end');
@@ -53,7 +57,6 @@ var mainBundle = browserify(path.main, {
     standalone   : 'Phyllotaxis'
   })
   .external(path.libs)
-  .transform('vueify')
   .transform('partialify');
 
 // Bundle the JavaScript with Browserify
@@ -103,6 +106,7 @@ gulp.task('styles', function () {
     .pipe(filter)
     .pipe($.less())
     .on('error', err)
+    .pipe($.concat('screen.css'))
     .pipe(filter.restore())
     .pipe(gulp.dest(path.build + 'styles'));
 });

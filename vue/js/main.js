@@ -101,10 +101,10 @@ var Phyllotaxis = {
   },
 
   components: {
-    'phyllotaxis-input'           : require('component/input.vue'),
-    'phyllotaxis-settings'        : require('component/settings.vue'),
-    'phyllotaxis-svg-renderer'    : require('component/svg-renderer.vue'),
-    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer.vue'),
+    'phyllotaxis-stepper'         : require('component/stepper'),
+    'phyllotaxis-settings'        : require('component/settings'),
+    'phyllotaxis-svg-renderer'    : require('component/svg-renderer'),
+    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer'),
     'phyllotaxis-line-renderer'   : require('component/line-renderer')
   }
 };

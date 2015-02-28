@@ -1,16 +1,8 @@
-<template>
-  <canvas
-    v-attr="width  : width,
-            height : height">
-  </canvas>
-</template>
-
-<script>
 'use strict';
 
-var Phyllotaxis = require('system/phyllotaxis');
-
 var CanvasRenderer = {
+  template: require('./template.html'),
+
   mixins: [
     require('mixin/resize')
   ],
@@ -67,4 +59,3 @@ var CanvasRenderer = {
 };
 
 module.exports = CanvasRenderer;
-</script>
