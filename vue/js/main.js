@@ -42,7 +42,7 @@ var Phyllotaxis = {
   },
 
   attached: function () {
-    window.addEventListener('keyup', this);
+    window.addEventListener('keyup', this.onKeyUp);
   },
 
   methods: {
@@ -57,16 +57,34 @@ var Phyllotaxis = {
       }
     },
 
-    handleEvent: function (evt) {
-      switch (evt.type) {
-        case 'keyup':
-          if (evt.keyCode === 32) {
-            this.$emit('toggle-play');
-          }
+    onKeyUp: function (evt) {
+      switch (evt.keyCode) {
+        // Space
+        case 32:
+          this.$emit('toggle-play');
+          break;
+
+        // Left
+        case 37:
+          this.angle -= this.step;
+          break;
+
+        // Up
+        case 38:
+          this.size++;
+          break;
+
+        // Right
+        case 39:
+          this.angle += this.step;
+          break;
+
+        // Down
+        case 40:
+          this.size--;
           break;
 
         default:
-          console.debug('key:', evt.keyCode);
           break;
       }
     },

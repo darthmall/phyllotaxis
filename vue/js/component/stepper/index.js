@@ -18,10 +18,12 @@ var Stepper = {
   methods: {
     decrement: function () {
       this.value = Number(this.value) - Number(this.step);
+      this.$event.stopPropagation();
     },
 
-    increment: function () {
+    increment: function (evt) {
       this.value = Number(this.value) + Number(this.step);
+      this.$event.stopPropagation();
     }
   }
 };
