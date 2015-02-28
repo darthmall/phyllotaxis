@@ -22,7 +22,7 @@ var path = {
   'libs'       : Object.keys(pkg.dependencies),
   'main'       : 'main.js',
   'scripts'    : 'js/**/*.js',
-  'styles'     : ['styles/**/*.{less,css}', 'js/component/**/*.less', '!styles/**/_*.less'],
+  'styles'     : ['styles/**/*.{less,css}', 'js/component/**/*.less'],
   'tests'      : './tests/**/*.js'
 };
 
@@ -100,7 +100,7 @@ gulp.task('fonts', function () {
 
 // Compile styles into the build directory
 gulp.task('styles', function () {
-  var filter = $.filter('**/*.less');
+  var filter = $.filter(['**/*.less', '**/!_*.less']);
 
   return gulp.src(path.styles)
     .pipe(filter)
@@ -108,6 +108,7 @@ gulp.task('styles', function () {
     .on('error', err)
     .pipe($.concat('screen.css'))
     .pipe(filter.restore())
+    .pipe($.filter('**/*.css'))
     .pipe(gulp.dest(path.build + 'styles'));
 });
 
