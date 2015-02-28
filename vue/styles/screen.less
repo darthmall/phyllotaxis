@@ -1,4 +1,6 @@
 @import '_settings';
+@import '_forms';
+@import '_buttons';
 
 ::selection {
   background-color : @secondary-color;
@@ -42,76 +44,4 @@ body {
 svg {
   height : 100%;
   width  : 100%;
-}
-
-fieldset {
-  border    : none;
-  border-top: 1px solid @light-gray;
-  padding   : 0;
-  margin    : 0 0 10.5pt 0;
-}
-
-legend {
-  color      : @light-gray;
-  padding    : 0 6pt;
-  text-align : center;
-}
-
-label {
-  color          : @light-gray;
-  display        : block;
-  font-size      : 8pt;
-  text-transform : uppercase;
-}
-
-label * {
-  transition: color 300ms ease-in-out;
-}
-
-select {
-  margin : 0 0 7pt 0;
-  width  : 100%;
-}
-
-input[type="text"] {
-  display          : block;
-
-  background-color : #F7F7F7;
-  border           : none;
-
-  font-size        : 14pt;
-
-  box-sizing       : border-box;
-  padding          : 4pt;
-  width            : 100%;
-
-  transition       : background-color 300ms ease-in-out;
-
-  &:focus {
-    background-color : lighten(@primary-color, 35%);
-    outline          : none;
-  }
-}
-
-label .focused {
-  color: @primary-color;
-}
-
-.button-box {
-  display        : flex;
-  align-items    : stretch;
-  flex-direction : row;
-
-  button {
-    flex-grow: 1;
-    margin: 0 4px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 }

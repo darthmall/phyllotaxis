@@ -1,0 +1,71 @@
+@import '_settings';
+
+form {
+  color: @gray;
+}
+
+fieldset {
+  border    : none;
+  border-top: 1px solid @light-gray;
+  padding   : 0;
+  margin    : 0 0 10.5pt 0;
+}
+
+legend {
+  color      : @light-gray;
+  padding    : 0 6pt;
+  text-align : center;
+}
+
+label {
+  color          : @light-gray;
+  display        : block;
+  font-size      : 8pt;
+  text-transform : uppercase;
+}
+
+label * {
+  transition: color 300ms ease-in-out;
+}
+
+select {
+  margin : 0 0 7pt 0;
+  width  : 100%;
+}
+
+input[type="text"] {
+  display          : block;
+
+  background-color : @light-gray;
+  border           : none;
+
+  color            : @gray;
+  font-size        : 14pt;
+
+  box-sizing       : border-box;
+  padding          : 4pt;
+  width            : 100%;
+
+  transition       : background-color 300ms ease-in-out;
+
+  &:focus {
+    background-color : lighten(@primary-color, 35%);
+    outline          : none;
+  }
+}
+
+label .focused {
+  color: @primary-color;
+}
+
+.stepper {
+  button {
+    background-color : @light-gray;
+    border-left      : 1px solid white;
+    color            : @gray;
+
+    &:first-child {
+      border-bottom: 1px solid white;
+    }
+  }
+}

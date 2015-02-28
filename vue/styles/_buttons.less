@@ -1,0 +1,45 @@
+@import '_settings';
+
+.button-box {
+  display        : flex;
+  align-items    : stretch;
+  flex-direction : row;
+
+  button {
+    flex-grow: 1;
+    margin: 0 4px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+button {
+  background-color : #fff;
+  border           : 2px solid @gray;
+  color            : @gray;
+
+  transition       : all 200ms ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active,
+  &.on {
+    background-color : @secondary-color;
+    border-color     : @secondary-color;
+    outline          : none;
+    color            : #fff;
+  }
+
+  &[disabled] {
+    border-color : @light-gray;
+    color        : @light-gray;
+  }
+}
