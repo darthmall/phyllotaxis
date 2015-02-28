@@ -53,6 +53,13 @@
 </fieldset>
 
 <div class="button-box">
-  <button type="button" class="primary">Play</button>
-  <button type="button">Save</button>
+  <button
+    type="button"
+    class="primary"
+    v-class="on : playing"
+    v-dispatch="click : 'toggle-play'">Play</button>
+
+  <button
+    type="button"
+    v-dispatch="click : 'save-settings'">Save</button>
 </div>

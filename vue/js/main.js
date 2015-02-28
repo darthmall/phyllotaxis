@@ -6,6 +6,8 @@ var d3          = require('d3');
 
 var Phyllotaxis = require('system/phyllotaxis');
 
+Vue.config.debug = true;
+
 function degrees(rad) {
   return rad * 180 / Math.PI;
 }
@@ -50,17 +52,16 @@ var Phyllotaxis = {
         this.floretColor = this.colored ?
           d3.hsl(degrees(this.angle), 0.5, 0.5).toString() :
           '#333333';
-      }
 
-      window.requestAnimationFrame(this.animate);
+        window.requestAnimationFrame(this.animate);
+      }
     },
 
     handleEvent: function (evt) {
       switch (evt.type) {
         case 'keyup':
           if (evt.keyCode === 32) {
-            this.playing = !this.playing;
-            this.animate();
+            this.$emit('toggle-play');
           }
           break;
 
@@ -74,6 +75,16 @@ var Phyllotaxis = {
       this.angle = DEFAULT.angle;
       this.scale = DEFAULT.scale;
       this.size  = DEFAULT.size;
+    }
+  },
+
+  events: {
+    'toggle-play': function () {
+      this.playing = !this.playing;
+      this.animate();
+    },
+
+    'save-settings': function () {
     }
   },
 
@@ -106,7 +117,11 @@ var Phyllotaxis = {
     'phyllotaxis-svg-renderer'    : require('component/svg-renderer'),
     'phyllotaxis-canvas-renderer' : require('component/canvas-renderer'),
     'phyllotaxis-line-renderer'   : require('component/line-renderer')
-  }
+  },
+
+  directives: {
+    'dispatch' : require('directive/dispatch')
+  },
 };
 
 new Vue(Phyllotaxis);
