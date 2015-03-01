@@ -12,6 +12,8 @@ var gulp        = require('gulp');
 var pkg         = require('./package.json');
 var serveStatic = require('serve-static');
 var source      = require('vinyl-source-stream');
+var send        = require('send');
+var resolve     = require('path').resolve;
 
 var path = {
   'build'      : 'build/',
@@ -144,6 +146,13 @@ gulp.task('watch', ['build'], function () {
 gulp.task('serve', function () {
   connect()
     .use(serveStatic(path.build))
+    .use(function (req, res, next) {
+      var stream = send(req, '/', {
+        root: resolve(path.build)
+      });
+
+      stream.pipe(res);
+    })
     .listen(8000);
 
     $.util.log('Server listening on http://localhost:' + 8000);
