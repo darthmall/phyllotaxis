@@ -2,66 +2,67 @@
 'use strict';
 
 var Vue         = require('vue');
-var d3          = require('d3');
+var page        = require('page');
 
-var Phyllotaxis = require('system/phyllotaxis');
+var phyllotaxis = require('data/phyllotaxis');
 
 Vue.config.debug = true;
 
-function degrees(rad) {
-  return rad * 180 / Math.PI;
+function route(vm, component) {
+  return function () {
+    vm.currentView = component;
+  };
 }
 
 var DEFAULT = {
   scale : 15,
   angle : 2.39982772,
-  size  : 200,
+  age   : 200,
 };
 
-var Phyllotaxis = {
-  el       : '#phyllotaxis',
+new Vue({
+  el : '#phyllotaxis',
 
   data: {
-    system       : new Phyllotaxis(DEFAULT.scale, DEFAULT.angle, DEFAULT.size),
+    currentView : 'view-phyllotaxis',
 
-    // Computation inputs
-    scale        : DEFAULT.scale,
-    angle        : DEFAULT.angle,
-    size         : DEFAULT.size,
+    scale       : DEFAULT.scale,
+    angle       : DEFAULT.angle,
+    age         : DEFAULT.age,
 
-    // Rendering
-    renderer     : 'phyllotaxis-canvas-renderer',
-    colored      : false,
-    floretColor  : '#333333',
-    floretSize   : 5,
+    step        : 0.0001,
+    playing     : false
+  },
 
-    // Animation
-    lastFrame    : 0,
-    playing      : false,
-    step         : 0.0001
+  created: function () {
+    page('/', route(this, 'view-phyllotaxis'));
+    page('/hyphae', route(this, 'view-hyphae'));
+    page();
   },
 
   attached: function () {
     window.addEventListener('keyup', this.onKeyUp);
+    window.addEventListener('click', this.preventFocus);
+  },
+
+  computed: {
+    florets: function () {
+      return phyllotaxis(this.scale, this.angle, this.age).map(function (f) {
+        return {
+          x: f.r * Math.cos(f.theta),
+          y: f.r * Math.sin(f.theta)
+        };
+      });
+    }
   },
 
   methods: {
-    animate: function () {
-      if (this.playing) {
-        this.angle      += this.step;
-        this.floretColor = this.colored ?
-          d3.hsl(degrees(this.angle), 0.5, 0.5).toString() :
-          '#333333';
-
-        window.requestAnimationFrame(this.animate);
-      }
-    },
-
     onKeyUp: function (evt) {
       switch (evt.keyCode) {
         // Space
         case 32:
-          this.$emit('toggle-play');
+          console.debug(this.playing);
+          this.playing = !this.playing;
           break;
 
         // Left
@@ -71,7 +72,7 @@ var Phyllotaxis = {
 
         // Up
         case 38:
-          this.size++;
+          this.age++;
           break;
 
         // Right
@@ -81,66 +82,42 @@ var Phyllotaxis = {
 
         // Down
         case 40:
-          this.size--;
+          this.age--;
           break;
 
         default:
           break;
       }
-    }
+    },
 
+    preventFocus: function (evt) {
+      // Prevent buttons from keeping focus, otherwise the space bar
+      // accelerator will activate the button, too
+      if (evt.target.tagName.toLowerCase() === 'button') {
+        evt.target.blur();
+      }
+    }
   },
 
   events: {
-    'toggle-play': function () {
-      this.playing = !this.playing;
-      this.animate();
-    },
-
     'save-settings': function () {
     },
 
     'reset': function () {
       this.angle = DEFAULT.angle;
       this.scale = DEFAULT.scale;
-      this.size  = DEFAULT.size;
-    }
-  },
-
-  watch: {
-    'colored': function () {
-      this.floretColor = this.colored ?
-        d3.hsl(degrees(this.angle), 0.5, 0.5).toString() :
-        '#333333';
-    },
-
-    'angle': function () {
-      this.system.angle = this.angle;
-      this.$broadcast('draw');
-    },
-
-    'scale': function () {
-      this.system.scale = this.scale;
-      this.$broadcast('draw');
-    },
-
-    'size': function () {
-      this.system.size = this.size;
-      this.$broadcast('draw');
+      this.age   = DEFAULT.age;
     }
   },
 
   components: {
-    'phyllotaxis-stepper'         : require('component/stepper'),
-    'phyllotaxis-settings'        : require('component/settings'),
-    'phyllotaxis-svg-renderer'    : require('component/svg-renderer'),
-    'phyllotaxis-canvas-renderer' : require('component/canvas-renderer'),
-    'phyllotaxis-line-renderer'   : require('component/line-renderer')
+    'view-phyllotaxis'    : require('view/phyllotaxis'),
+    'view-hyphae'         : require('view/hyphae'),
+
+    'phyllotaxis-stepper' : require('component/stepper'),
   },
 
   directives: {
     'dispatch' : require('directive/dispatch')
-  },
-};
-
-new Vue(Phyllotaxis);
+  }
+});

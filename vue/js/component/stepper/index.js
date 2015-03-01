@@ -21,7 +21,7 @@ var Stepper = {
       this.$event.stopPropagation();
     },
 
-    increment: function (evt) {
+    increment: function () {
       this.value = Number(this.value) + Number(this.step);
       this.$event.stopPropagation();
     }

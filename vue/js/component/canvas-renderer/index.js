@@ -9,21 +9,18 @@ var CanvasRenderer = {
 
   data: function () {
     return {
-      height : 1,
-      width  : 1,
+      height  : 1,
+      width   : 1,
 
-      color  : 'black',
-      size   : 0,
-      system : null,
+      florets : [],
+      color   : 'black',
+      size    : 5,
+      system  : null,
     };
   },
 
   methods: {
     draw: function () {
-      if (!(this.system && this.size)) {
-        return;
-      }
-
       var canvas = this.$el.getElementsByTagName('canvas')[0];
       var ctx    = canvas.getContext('2d');
 
@@ -34,27 +31,24 @@ var CanvasRenderer = {
       ctx.fillStyle = this.color;
       ctx.translate(this.width / 2, this.height / 2);
 
-      for (var iter = this.system.iter, p = iter.next(); p; p = iter.next()) {
+      for (var i = 0, l = this.florets.length; i < l; i++) {
+        var p = this.florets[i];
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, this.size, 0, Math.PI * 2, false);
         ctx.fill();
-        ctx.closePath();
       }
 
       ctx.restore();
     }
   },
 
-  events: {
-    'draw' : 'draw'
-  },
-
   watch: {
-    'height' : 'draw',
-    'width'  : 'draw',
-    'system' : 'draw',
-    'size'   : 'draw',
-    'color'  : 'draw'
+    'color'   : 'draw',
+    'florets' : 'draw',
+    'height'  : 'draw',
+    'size'    : 'draw',
+    'width'   : 'draw',
   }
 };
 

@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "d3": "^3.5.4",
+    "page": "^1.6.1",
     "vue": "^0.11.5"
   },
   "devDependencies": {

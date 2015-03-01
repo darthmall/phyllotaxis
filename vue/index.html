@@ -12,17 +12,15 @@
 
 <body id="phyllotaxis">
   <div
-    id="canvas"
-    v-component="{{ renderer }}"
+    class="hbox"
+    v-component="{{ currentView }}"
     v-with="
-      color  : floretColor,
-      system : system,
-      size   : floretSize"
-    ></div>
-
-  <form
-    id="settings"
-    v-component="phyllotaxis-settings"></form>
+      florets : florets,
+      scale   : scale,
+      angle   : angle,
+      age     : age,
+      step    : step,
+      playing : playing"></div>
 
   <script src="js/lib.js"></script>
   <script src="js/main.js"></script>

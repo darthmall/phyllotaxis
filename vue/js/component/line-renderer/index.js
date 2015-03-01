@@ -7,7 +7,7 @@ var LineRenderer = {
 
   methods: {
     draw: function () {
-      if (!(this.system && this.size)) {
+      if (this.florets.length < 1) {
         return;
       }
 
@@ -21,20 +21,15 @@ var LineRenderer = {
       ctx.strokeStyle = this.color;
       ctx.translate(this.width / 2, this.height / 2);
 
-      var iter = this.system.iter;
-      var p    = iter.next();
 
-      if (!p) {
-        return;
-      }
+      var p = this.florets[0];
 
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
-      p = iter.next();
 
-      while (p) {
+      for (var i = 1, l = this.florets.length; i < l; i++) {
+        p = this.florets[i];
         ctx.lineTo(p.x, p.y);
-        p = iter.next();
       }
 
       ctx.stroke();

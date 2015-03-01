@@ -9,7 +9,7 @@
 - [ ] Input validation
 - [ ] Mirrored overlay
 - [ ] Phyllotaxis clock
-- [ ] Reset button
+- [x] Reset button
 - [x] Add a README
 - [x] Add scripts to package.json
 - [x] Bundle dependencies separately for faster builds and loads
