@@ -8,6 +8,15 @@ var phyllotaxis = require('data/phyllotaxis');
 
 Vue.config.debug = true;
 
+/**
+ * Create a route to a view component.
+ *
+ * Returns a function that updates the `currentView` property on a ViewModel
+ * with the name of a Vue component.
+ * 
+ * @param {object} vm The ViewModel
+ * @param {string} component The name of a Vue component
+ */
 function route(vm, component) {
   return function () {
     vm.currentView = component;
@@ -35,6 +44,7 @@ new Vue({
   },
 
   created: function () {
+    // Set up routing
     page('/', route(this, 'view-phyllotaxis'));
     page('/hyphae', route(this, 'view-hyphae'));
     page();
@@ -42,6 +52,7 @@ new Vue({
 
   attached: function () {
     window.addEventListener('keyup', this.onKeyUp);
+    window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('click', this.preventFocus);
   },
 
@@ -58,13 +69,13 @@ new Vue({
 
   methods: {
     onKeyUp: function (evt) {
-      switch (evt.keyCode) {
-        // Space
-        case 32:
-          console.debug(this.playing);
-          this.playing = !this.playing;
-          break;
+      if (evt.keyCode === 32) {
+        this.playing = !this.playing;
+      }
+    },
 
+    onKeyDown: function (evt) {
+      switch (evt.keyCode) {
         // Left
         case 37:
           this.angle -= this.step;
@@ -101,6 +112,7 @@ new Vue({
 
   events: {
     'save-settings': function () {
+      // FIXME
     },
 
     'reset': function () {
