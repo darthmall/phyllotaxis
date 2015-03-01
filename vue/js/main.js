@@ -131,5 +131,9 @@ new Vue({
 
   directives: {
     'dispatch' : require('directive/dispatch')
-  }
+  },
+
+  partials: {
+    'phyllotaxis-settings' : require('template/phyllotaxis-settings.html')
+  },
 });

@@ -1,0 +1,19 @@
+<div
+  id="canvas"
+  v-component="hyphae-renderer"
+  v-with="
+    florets : florets,
+    size    : floretSize"
+  ></div>
+
+<form id="settings">
+  <div v-partial="phyllotaxis-settings"></div>
+
+  <fieldset>
+    <legend>Hormones</legend>
+  </fieldset>
+
+  <fieldset>
+    <legend>Hyphae</legend>
+  </fieldset>
+</form>

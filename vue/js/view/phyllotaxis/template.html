@@ -8,29 +8,14 @@
   ></div>
 
 <form id="settings">
-  <fieldset>
-    <legend>Phyllotaxis</legend>
-    <div
-       v-component="phyllotaxis-stepper"
-       v-with="value: scale">
-       Scale
-     </div>
-
-     <div
-       v-component="phyllotaxis-stepper"
-       v-with="value: angle"
-       data-step="{{ step }}">
-       Angle
-     </div>
-  </fieldset>
+  <div v-partial="phyllotaxis-settings"></div>
 
   <fieldset>
     <legend>Florets</legend>
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value: age">
-      Count
-    </div>
+    <select v-model="renderer">
+      <option value="phyllotaxis-canvas-renderer">Circles</option>
+      <option value="phyllotaxis-line-renderer">Line</option>
+    </select>
 
     <div
       v-component="phyllotaxis-stepper"
@@ -48,12 +33,6 @@
 
   <fieldset>
     <legend>Animation</legend>
-    <select v-model="renderer">
-      <option value="phyllotaxis-canvas-renderer">Canvas</option>
-      <option value="phyllotaxis-line-renderer">Line</option>
-      <option value="phyllotaxis-svg-renderer">SVG</option>
-    </select>
-
     <div
       v-component="phyllotaxis-stepper"
       v-with="value: step"
@@ -62,19 +41,9 @@
     </div>
   </fieldset>
 
-  <div class="button-box">
-    <button
-      type="button"
-      class="primary"
-      v-class="on : playing"
-      v-on="click : playing = !playing">Play</button>
-
-    <button
-      type="button"
-      v-dispatch="click : 'save-settings'">Save</button>
-  </div>
-
   <button
     type="button"
-    v-dispatch="click : 'reset'">Reset</button>
+    class="primary"
+    v-class="on : playing"
+    v-on="click : playing = !playing">Play</button>
 </form>

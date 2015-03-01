@@ -19,3 +19,4 @@
 - [ ] Custom radius functions
 - [ ] Local storage
 - [ ] Save phyllotaxis inputs to local storage and view as gallery
+- [ ] Add help tips

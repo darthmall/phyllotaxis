@@ -1,7 +1,13 @@
 'use strict';
 
 module.exports = {
+  template: require('./template.html'),
+
   data: function () {
-    return {};
+    return {
+      growing: false,
+      growthRate: 1,
+
+    };
   }
 };

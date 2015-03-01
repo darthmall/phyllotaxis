@@ -1,0 +1,30 @@
+<fieldset>
+  <legend>Phyllotaxis</legend>
+  <div
+    v-component="phyllotaxis-stepper"
+    v-with="value: scale">
+    Scale
+  </div>
+
+  <div
+    v-component="phyllotaxis-stepper"
+    v-with="value: angle"
+    data-step="{{ step }}">
+    Angle
+  </div>
+
+  <div
+    v-component="phyllotaxis-stepper"
+    v-with="value: age">
+    Count
+  </div>
+
+  <div class="button-box">
+    <button
+      type="button"
+      v-dispatch="click : 'save-settings'">Save</button>
+  <button
+    type="button"
+    v-dispatch="click : 'reset'">Reset</button>
+  </div>
+</fieldset>
