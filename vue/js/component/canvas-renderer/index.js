@@ -1,6 +1,14 @@
 'use strict';
 var Vue = require('vue');
 
+/**
+ * Phyllotaxis renderer that draws circles for each floret.
+ *
+ * @param {string} color The fill color used when drawing florets
+ * @param {array} florets An array of objects representing the points to draw.
+ * Each should have an `x` and `y` property
+ * @param {number} size The radius of the circles to draw
+ */
 module.exports = {
   template: require('./template.html'),
 
@@ -10,17 +18,21 @@ module.exports = {
 
   data: function () {
     return {
+      // Canvas dimensions, controlled by the resize mixin
       height  : 1,
       width   : 1,
 
-      florets : [],
+      // Properties inherited from the parent component. Do not modify.
       color   : 'black',
+      florets : [],
       size    : 5,
-      system  : null,
     };
   },
 
   methods: {
+    /**
+     * Draw to the canvas
+     */
     draw: function () {
       var canvas = this.$el.getElementsByTagName('canvas')[0];
       var ctx    = canvas.getContext('2d');
@@ -43,6 +55,15 @@ module.exports = {
       ctx.restore();
     },
 
+    /**
+     * Schedule a redraw for the next tick.
+     *
+     * This is necessary when the width or height of the canvas changes
+     * because changing the canvas size causes the canvas to be cleared. If we
+     * draw immediately in response to new dimensions, the Vue bindings on the
+     * width and height attributes are resolved after our draw, and the
+     * drawing gets cleared.
+     */
     redraw: function () {
       Vue.nextTick(this.draw);
     }
