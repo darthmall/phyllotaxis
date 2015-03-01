@@ -5,8 +5,10 @@ module.exports = {
 
   data: function () {
     return {
-      growing: false,
-      growthRate: 1,
+      growthRate      : 1,
+
+      hormoneSize     : 5,
+      hormoneStrength : 15
     };
   },
 

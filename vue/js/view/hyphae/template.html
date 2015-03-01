@@ -3,7 +3,8 @@
   v-component="hyphae-renderer"
   v-with="
     florets : florets,
-    size    : floretSize"
+    size     : hormoneSize,
+    strength : hormoneStrength"
   ></div>
 
 <form id="settings">
@@ -13,12 +14,14 @@
     <legend>Hormones</legend>
 
     <div
-      v-component="phyllotaxis-stepper">
+      v-component="phyllotaxis-stepper"
+      v-with="value : hormoneSize">
       Size
     </div>
 
     <div
-      v-component="phyllotaxis-stepper">
+      v-component="phyllotaxis-stepper"
+      v-with="value : hormoneStrength">
       Strength
     </div>
   </fieldset>
