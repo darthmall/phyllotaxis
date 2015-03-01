@@ -11,9 +11,32 @@
 
   <fieldset>
     <legend>Hormones</legend>
+
+    <div
+      v-component="phyllotaxis-stepper">
+      Size
+    </div>
+
+    <div
+      v-component="phyllotaxis-stepper">
+      Strength
+    </div>
   </fieldset>
 
   <fieldset>
     <legend>Hyphae</legend>
+    <div
+      v-component="phyllotaxis-stepper"
+      v-with="value : growthRate"
+      data-step="1">
+      Growth Rate
+    </div>
+
+    <button
+      class="primary"
+      v-class="on : growing"
+      v-on="click : growing = !growing">
+      Grow!
+    </button>
   </fieldset>
 </form>

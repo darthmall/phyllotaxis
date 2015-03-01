@@ -7,7 +7,10 @@ module.exports = {
     return {
       growing: false,
       growthRate: 1,
-
     };
+  },
+
+  components: {
+    'hyphae-renderer': require('component/hyphae-renderer')
   }
 };
