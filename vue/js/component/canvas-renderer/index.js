@@ -1,6 +1,7 @@
 'use strict';
+var Vue = require('vue');
 
-var CanvasRenderer = {
+module.exports = {
   template: require('./template.html'),
 
   mixins: [
@@ -40,16 +41,19 @@ var CanvasRenderer = {
       }
 
       ctx.restore();
+    },
+
+    redraw: function () {
+      Vue.nextTick(this.draw);
     }
   },
 
   watch: {
     'color'   : 'draw',
     'florets' : 'draw',
-    'height'  : 'draw',
     'size'    : 'draw',
-    'width'   : 'draw',
+
+    'width'   : 'redraw',
+    'height'  : 'redraw'
   }
 };
-
-module.exports = CanvasRenderer;
