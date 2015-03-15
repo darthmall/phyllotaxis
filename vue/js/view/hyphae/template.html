@@ -2,44 +2,53 @@
   id="canvas"
   v-component="hyphae-renderer"
   v-with="
-    florets : florets,
+    florets  : florets,
     size     : hormoneSize,
     strength : hormoneStrength"
   ></div>
 
-<form id="settings">
-  <div v-partial="phyllotaxis-settings"></div>
+<div>
+  <nav>
+    <ul>
+      <li><a href="/">Phyllotaxis</a></li>
+      <li class="current"><a href="/hyphae">Hyphae</a></li>
+    </ul>
+  </nav>
 
-  <fieldset>
-    <legend>Hormones</legend>
+  <form id="settings">
+    <div v-partial="phyllotaxis-settings"></div>
 
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value : hormoneSize">
-      Size
-    </div>
+    <fieldset>
+      <legend>Hormones</legend>
 
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value : hormoneStrength">
-      Strength
-    </div>
-  </fieldset>
+      <div
+        v-component="phyllotaxis-stepper"
+        v-with="value : hormoneSize">
+        Size
+      </div>
 
-  <fieldset>
-    <legend>Hyphae</legend>
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value : growthRate"
-      data-step="1">
-      Growth Rate
-    </div>
+      <div
+        v-component="phyllotaxis-stepper"
+        v-with="value : hormoneStrength">
+        Strength
+      </div>
+    </fieldset>
 
-    <button
-      class="primary"
-      v-class="on : growing"
-      v-on="click : growing = !growing">
-      Grow!
-    </button>
-  </fieldset>
-</form>
+    <fieldset>
+      <legend>Hyphae</legend>
+      <div
+        v-component="phyllotaxis-stepper"
+        v-with="value : growthRate"
+        data-step="1">
+        Growth Rate
+      </div>
+
+      <button
+        class="primary"
+        v-class="on : growing"
+        v-on="click : growing = !growing">
+        Grow!
+      </button>
+    </fieldset>
+  </form>
+</div>
