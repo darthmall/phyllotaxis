@@ -8,10 +8,10 @@
       type="text"
       v-model="value"
       v-on="
-        keyup: decrement | key down,
-        keyup: increment | key up,
-        focus: hasFocus = true,
-        blur: hasFocus = false"
+        keydown: decrement | key down,
+        keydown: increment | key up,
+        focus  : hasFocus = true,
+        blur   : hasFocus = false"
       number>
 
     <div class="buttons">
