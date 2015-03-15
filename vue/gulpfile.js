@@ -97,7 +97,7 @@ gulp.task('libs', function () {
 });
 
 // Run the builder
-gulp.task('browserify', ['libs', 'jshint'], build);
+gulp.task('browserify', ['jshint'], build);
 
 // Move the fonts to the build directory
 gulp.task('fonts', function () {
