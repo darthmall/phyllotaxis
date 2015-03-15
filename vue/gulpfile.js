@@ -69,7 +69,10 @@ function build() {
 
   return bundle
     .pipe(source('js/main.js'))
-    .pipe(gulp.dest(path.build));
+    .pipe(gulp.dest(path.build))
+    .on('end', function () {
+      say('App built');
+    });
 };
 
 // Check the JavaScript for errors with jshint
@@ -87,7 +90,10 @@ gulp.task('libs', function () {
 
   return bundle
     .pipe(source('js/lib.js'))
-    .pipe(gulp.dest(path.build));
+    .pipe(gulp.dest(path.build))
+    .on('end', function () {
+      say('Library built');
+    });
 });
 
 // Run the builder
@@ -111,7 +117,10 @@ gulp.task('styles', function () {
     .pipe($.concat('screen.css'))
     .pipe(filter.restore())
     .pipe($.filter('**/*.css'))
-    .pipe(gulp.dest(path.build + 'styles'));
+    .pipe(gulp.dest(path.build + 'styles'))
+    .on('end', function () {
+      say('CSS built');
+    });
 });
 
 // Move the HTML into the build directory
