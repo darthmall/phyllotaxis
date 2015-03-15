@@ -1,0 +1,24 @@
+- Code coverage
+- Comments!
+- Custom radius functions (sin, cos, tan, _etc._)
+- Docstrings!
+- Generate docs from docstrings
+- Incremental builds with watchify
+- Input formatting
+- Input validation
+- Mirrored overlay
+- Phyllotaxis clock
+- Hyphae growth
+- Flocking
+- Custom radius functions
+- Local storage
+- Save phyllotaxis inputs to local storage and view as gallery
+- Add help tips
+- Refactor navigation so that it exists in one place
+Archive:
+	- Canvas implementation @done
+	- Reset button @done
+	- Add a README @done
+	- Add scripts to package.json @done
+	- Bundle dependencies separately for faster builds and loads @done
+	- Tests @done
