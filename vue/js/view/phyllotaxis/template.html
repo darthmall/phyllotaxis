@@ -7,43 +7,52 @@
     size    : floretSize"
   ></div>
 
-<form id="settings">
-  <div v-partial="phyllotaxis-settings"></div>
+<div>
+  <nav>
+    <ul>
+      <li class="current"><a href="/">Phyllotaxis</a></li>
+      <li><a href="/hyphae">Hyphae</a></li>
+    </ul>
+  </nav>
 
-  <fieldset>
-    <legend>Florets</legend>
-    <select v-model="renderer">
-      <option value="phyllotaxis-canvas-renderer">Circles</option>
-      <option value="phyllotaxis-line-renderer">Line</option>
-    </select>
+  <form id="settings">
+    <div v-partial="phyllotaxis-settings"></div>
 
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value: floretSize">
-      Size
-    </div>
+    <fieldset>
+      <legend>Florets</legend>
+      <select v-model="renderer">
+        <option value="phyllotaxis-canvas-renderer">Circles</option>
+        <option value="phyllotaxis-line-renderer">Line</option>
+      </select>
 
-    <label>
-      <input
-        type="checkbox"
-        v-model="colored">
-      Colored
-    </label>
-  </fieldset>
+      <div
+        v-component="phyllotaxis-stepper"
+        v-with="value: floretSize">
+        Size
+      </div>
 
-  <fieldset>
-    <legend>Animation</legend>
-    <div
-      v-component="phyllotaxis-stepper"
-      v-with="value: step"
-      data-step="0.0001">
-      Step
-    </div>
-  </fieldset>
+      <label>
+        <input
+          type="checkbox"
+          v-model="colored">
+        Colored
+      </label>
+    </fieldset>
 
-  <button
-    type="button"
-    class="primary"
-    v-class="on : playing"
-    v-on="click : playing = !playing">Play</button>
-</form>
+    <fieldset>
+      <legend>Animation</legend>
+      <div
+        v-component="phyllotaxis-stepper"
+        v-with="value: step"
+        data-step="0.0001">
+        Step
+      </div>
+    </fieldset>
+
+    <button
+      type="button"
+      class="primary"
+      v-class="on : playing"
+      v-on="click : playing = !playing">Play</button>
+  </form>
+</div>
