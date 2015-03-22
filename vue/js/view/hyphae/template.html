@@ -1,11 +1,14 @@
 <div
   id="canvas"
-  v-component="hyphae-renderer"
-  v-with="
-    florets  : florets,
-    size     : hormoneSize,
-    strength : hormoneStrength"
-  ></div>
+  v-el="container">
+  <canvas
+    v-el="canvas"
+    v-attr="
+      height : height,
+      width  : width"
+    v-on="click : onClick">
+  </canvas>
+</div>
 
 <div>
   <nav>
@@ -44,9 +47,10 @@
       </div>
 
       <button
+        type="button"
         class="primary"
-        v-class="on : growing"
-        v-on="click : growing = !growing">
+        v-class="on : playing"
+        v-on="click : playing = !playing">
         Grow!
       </button>
     </fieldset>
