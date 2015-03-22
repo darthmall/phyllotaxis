@@ -8,7 +8,8 @@
 - Input validation
 - Mirrored overlay
 - Phyllotaxis clock
-- Hyphae growth
+- Hyphae growth @done(2015-03-22)
+- Implement a quadtree for fast click detection and nearest neighbor searches in the Hyphae simulation
 - Flocking
 - Custom radius functions
 - Local storage
